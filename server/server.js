@@ -23,9 +23,19 @@ async function initDb() {
       members TEXT,
       flight_details TEXT,
       return_ticket TEXT,
-      timestamp INTEGER
+      timestamp INTEGER,
+      head_name TEXT
     )
   `);
+  try {
+    await db.execute('ALTER TABLE families ADD COLUMN head_name TEXT');
+  } catch (e) {
+    // column already exists on databases created before this field was added
+  }
+}
+
+function normalizeName(name) {
+  return (name || '').trim().toLowerCase();
 }
 
 function rowToRecord(row) {
@@ -58,14 +68,15 @@ app.post('/api/save', async (req, res) => {
     return res.status(400).json({ error: 'Valid 10-digit phone number required' });
   }
   const timestamp = Date.now();
+  const headName = normalizeName(members && members[0] && members[0].name);
   await db.execute({
     sql: `
-      INSERT INTO families (phone, side, rsvp, travel_mode, members, flight_details, return_ticket, timestamp)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO families (phone, side, rsvp, travel_mode, members, flight_details, return_ticket, timestamp, head_name)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
       ON CONFLICT(phone) DO UPDATE SET
         side=excluded.side, rsvp=excluded.rsvp, travel_mode=excluded.travel_mode,
         members=excluded.members, flight_details=excluded.flight_details,
-        return_ticket=excluded.return_ticket, timestamp=excluded.timestamp
+        return_ticket=excluded.return_ticket, timestamp=excluded.timestamp, head_name=excluded.head_name
     `,
     args: [
       phone,
@@ -75,7 +86,8 @@ app.post('/api/save', async (req, res) => {
       JSON.stringify(members || []),
       flightDetails ? JSON.stringify(flightDetails) : null,
       returnTicket || null,
-      timestamp
+      timestamp,
+      headName || null
     ]
   });
   res.json({ ok: true, timestamp });
@@ -88,6 +100,17 @@ app.get('/api/check/:phone', async (req, res) => {
   }
   const result = await db.execute({ sql: 'SELECT * FROM families WHERE phone = ?', args: [phone] });
   if (result.rows.length === 0) return res.status(404).json({ found: false });
+  res.json({ found: true, record: rowToRecord(result.rows[0]) });
+});
+
+app.get('/api/check-by-name/:name', async (req, res) => {
+  const name = normalizeName(req.params.name);
+  if (!name) return res.json({ found: false });
+  const result = await db.execute({
+    sql: 'SELECT * FROM families WHERE head_name = ? ORDER BY timestamp DESC LIMIT 1',
+    args: [name]
+  });
+  if (result.rows.length === 0) return res.json({ found: false });
   res.json({ found: true, record: rowToRecord(result.rows[0]) });
 });
 
