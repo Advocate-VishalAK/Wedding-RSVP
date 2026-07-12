@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ankita ✦ Vishal — Wedding RSVP</title>
+<meta name="description" content="Join Ankita and Vishal for their wedding celebrations across Hyderabad and Lucknow — RSVP, travel, and everything you need for the days ahead.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 29'%3E%3Cpath d='M16 28C16 28 1 18.5 1 8.8C1 3.9 4.9 1 9.2 1C12.3 1 14.9 2.8 16 5.4C17.1 2.8 19.7 1 22.8 1C27.1 1 31 3.9 31 8.8C31 18.5 16 28 16 28Z' fill='%23F5A623' stroke='%23C86B7B' stroke-width='0.8'/%3E%3C/svg%3E">
+<meta property="og:title" content="Ankita ✦ Vishal — You're Invited">
+<meta property="og:description" content="Two hearts, two families, two cultures — one forever. RSVP for our wedding celebrations in Hyderabad and Lucknow.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;600;700&family=Noto+Sans+Telugu:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --base:#0D1127; --base-2:#151B3B; --base-3:#1C2350;
+    --groom:#F5A623; --groom-soft:#FFD68A;
+    --bride:#C86B7B; --bride-soft:#E8A9B4;
+    --silk:#F9F9FB; --silk-dim:rgba(249,249,251,0.65); --silk-faint:rgba(249,249,251,0.4);
+    --glass-bg:rgba(249,249,251,0.06);
+    --glass-border-gold:rgba(245,166,35,0.35);
+    --glass-border-rose:rgba(200,107,123,0.35);
+    --error:#E8798A; --success:#7FD4A8;
+    --ease:cubic-bezier(0.22,1,0.36,1);
+    --radius-sm:14px; --radius-md:22px; --radius-lg:30px; --radius-pill:999px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; font-family:'Inter','Noto Sans Devanagari','Noto Sans Telugu',sans-serif; color:var(--silk); -webkit-font-smoothing:antialiased;
+    background:
+      radial-gradient(120% 90% at 15% 0%, rgba(245,166,35,0.10), transparent 55%),
+      radial-gradient(120% 90% at 85% 15%, rgba(200,107,123,0.10), transparent 55%),
+      linear-gradient(180deg, var(--base) 0%, var(--base-2) 45%, var(--base) 100%);
+    min-height:100vh;
+  }
+  .serif{ font-family:'Playfair Display','Noto Sans Devanagari','Noto Sans Telugu',serif; }
+  .mono{ font-family:'IBM Plex Mono',monospace; }
+  ::selection{ background:var(--groom); color:var(--base); }
+
+  .screen{ display:none; min-height:100svh; padding:88px 20px 60px; position:relative; }
+  .screen.active{ display:flex; flex-direction:column; animation:fadeIn 0.55s var(--ease); }
+  @keyframes fadeIn{ from{opacity:0; transform:translateY(12px);} to{opacity:1; transform:translateY(0);} }
+  .center{ flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; max-width:480px; margin:0 auto; width:100%; }
+
+  #nav{
+    position:fixed; top:16px; left:16px; right:16px; z-index:200;
+    display:none; align-items:center; justify-content:space-between;
+    background:var(--glass-bg); backdrop-filter:blur(16px) saturate(180%); -webkit-backdrop-filter:blur(16px) saturate(180%);
+    border:1px solid rgba(249,249,251,0.14); border-radius:var(--radius-pill);
+    padding:8px; max-width:420px; margin:0 auto;
+  }
+  #nav.show{ display:flex; }
+  .nav-btn{
+    width:48px; height:48px; border-radius:50%; border:none; cursor:pointer;
+    background:rgba(249,249,251,0.08); color:var(--silk); display:flex; align-items:center; justify-content:center;
+    transition:background .2s ease, transform .2s ease;
+  }
+  .nav-btn:active{ transform:scale(0.92); }
+  .nav-btn:hover{ background:rgba(245,166,35,0.22); }
+  .nav-title{ font-size:12px; font-weight:600; letter-spacing:.04em; color:var(--silk-dim); }
+
+  .eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--groom-soft); margin-bottom:16px; }
+  h1.title{ font-family:'Playfair Display','Noto Sans Devanagari','Noto Sans Telugu',serif; font-weight:600; font-size:clamp(24px,6vw,36px); margin:0 0 14px; line-height:1.3; }
+  p.sub{ color:var(--silk-dim); font-size:15.5px; line-height:1.75; margin:0 0 30px; }
+
+  .btn{ font-family:'Inter','Noto Sans Devanagari','Noto Sans Telugu',sans-serif; font-weight:700; font-size:15.5px; cursor:pointer; border-radius:var(--radius-pill); padding:16px 32px; border:none; min-height:52px; transition:transform .22s var(--ease), box-shadow .22s var(--ease), filter .22s ease; width:100%; max-width:320px; }
+  .btn-primary{ background:linear-gradient(135deg,var(--groom),#D6860F); color:var(--base); box-shadow:0 10px 30px rgba(245,166,35,0.35); }
+  .btn-primary:active{ transform:scale(.97); }
+  .btn-primary:hover{ filter:brightness(1.08); }
+  .btn-primary.bride{ background:linear-gradient(135deg,var(--bride),#A8495B); box-shadow:0 10px 30px rgba(200,107,123,0.35); }
+  .btn-secondary{ background:var(--glass-bg); backdrop-filter:blur(12px); border:1.5px solid rgba(249,249,251,0.22); color:var(--silk); }
+  .btn-secondary:hover{ border-color:var(--groom-soft); }
+  .btn-ghost{ background:transparent; color:var(--silk-dim); font-weight:600; font-size:14px; }
+  .btn-row{ display:flex; flex-direction:column; gap:14px; align-items:center; width:100%; }
+  .btn-row-h{ display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+
+  .field{ text-align:left; margin-bottom:18px; width:100%; }
+  .field label{ display:block; font-size:12px; font-weight:700; color:var(--silk-dim); text-transform:uppercase; letter-spacing:.05em; margin-bottom:7px; }
+  .field input, .field select{
+    width:100%; padding:15px 16px; border-radius:var(--radius-sm); min-height:48px;
+    border:1.5px solid rgba(249,249,251,0.18); background:rgba(249,249,251,0.05);
+    font-family:'Inter','Noto Sans Devanagari','Noto Sans Telugu',sans-serif; font-size:15px; color:var(--silk);
+  }
+  .field input::placeholder{ color:var(--silk-faint); }
+  .field input:focus, .field select:focus{ outline:none; border-color:var(--groom); box-shadow:0 0 0 4px rgba(245,166,35,0.15); }
+  .field select option{ background:var(--base-2); color:var(--silk); }
+  .field-hint{ font-size:11.5px; color:var(--silk-faint); margin-top:6px; }
+
+  .glass{
+    background:var(--glass-bg); backdrop-filter:blur(16px) saturate(180%); -webkit-backdrop-filter:blur(16px) saturate(180%);
+    border-radius:var(--radius-lg); border:1px solid rgba(249,249,251,0.14);
+  }
+
+  .lang-grid{ display:flex; flex-direction:column; gap:12px; width:100%; max-width:300px; }
+  .lang-btn{ padding:18px; border-radius:var(--radius-md); border:1.5px solid rgba(249,249,251,0.16); background:var(--glass-bg); backdrop-filter:blur(12px); font-size:17px; font-weight:700; cursor:pointer; color:var(--silk); min-height:52px; }
+  .lang-btn:hover{ border-color:var(--groom-soft); }
+
+  #screen-opening{ overflow:hidden; }
+  #particle-canvas{ position:absolute; inset:0; width:100%; height:100%; z-index:0; }
+  #screen-opening .center{ position:relative; z-index:1; }
+  .flame{ transform-origin:50% 100%; animation:flicker 2.4s ease-in-out infinite; }
+  @keyframes flicker{0%,100%{transform:scaleY(1) scaleX(1) rotate(0)}30%{transform:scaleY(1.1) scaleX(.95) rotate(-2deg)}60%{transform:scaleY(.93) scaleX(1.05) rotate(2deg)}}
+  .op-names{ font-family:'Playfair Display',serif; font-style:italic; font-size:clamp(38px,10vw,64px); margin:22px 0; background:linear-gradient(90deg,var(--groom-soft),var(--silk) 50%,var(--bride-soft)); -webkit-background-clip:text; background-clip:text; color:transparent; display:flex; align-items:center; justify-content:center; gap:0.15em; }
+  .heart-glyph{ display:inline-block; vertical-align:middle; animation:heartbeat 1.6s ease-in-out infinite; filter:drop-shadow(0 0 10px rgba(200,107,123,0.6)); }
+  @keyframes heartbeat{ 0%,100%{ transform:scale(1); } 20%{ transform:scale(1.18); } 35%{ transform:scale(0.98); } 50%{ transform:scale(1.1); } 65%{ transform:scale(1); } }
+  .op-blessing{ font-family:'Playfair Display','Noto Sans Devanagari','Noto Sans Telugu',serif; font-style:italic; font-size:15px; color:var(--silk-faint); margin-bottom:8px; }
+
+  .select-grid{ display:flex; gap:18px; width:100%; flex-wrap:wrap; justify-content:center; }
+  .side-card{
+    flex:1; min-width:150px; max-width:210px; border-radius:var(--radius-lg); padding:30px 18px; text-align:center;
+    cursor:pointer; position:relative; overflow:hidden; min-height:52px;
+    transition:transform .35s var(--ease), box-shadow .35s var(--ease), filter .35s var(--ease);
+    background:var(--glass-bg); backdrop-filter:blur(16px) saturate(180%);
+  }
+  .side-card.groom{ border:1px solid var(--glass-border-gold); }
+  .side-card.bride{ border:1px solid var(--glass-border-rose); }
+  .side-card:hover, .side-card.picked{ transform:translateY(-6px) scale(1.03); }
+  .side-card.groom:hover, .side-card.groom.picked{ box-shadow:0 0 0 1px var(--groom), 0 20px 50px rgba(245,166,35,0.3); }
+  .side-card.bride:hover, .side-card.bride.picked{ box-shadow:0 0 0 1px var(--bride), 0 20px 50px rgba(200,107,123,0.3); }
+  .side-card.dim{ opacity:0.35; filter:grayscale(0.4); transform:scale(0.96); }
+  .motif-bg{ position:absolute; inset:0; opacity:0.16; z-index:0; }
+  .side-card > *:not(.motif-bg){ position:relative; z-index:1; }
+  .side-card .name{ font-family:'Playfair Display',serif; font-size:23px; margin-top:14px; }
+  .side-card .place{ font-size:12px; color:var(--silk-dim); margin-top:4px; }
+
+  .outfit-chip{ display:inline-flex; align-items:center; gap:8px; font-size:12.5px; font-weight:700; padding:8px 16px; border-radius:999px; margin:4px; }
+  .outfit-yellow{ background:rgba(245,166,35,0.16); color:var(--groom-soft); }
+  .outfit-green{ background:rgba(127,212,168,0.15); color:var(--success); }
+  .outfit-western{ background:rgba(200,107,123,0.16); color:var(--bride-soft); }
+
+  .fam-card{ border-radius:var(--radius-md); padding:18px; margin-bottom:14px; text-align:left; width:100%; }
+  .fam-card-head{ display:flex; justify-content:space-between; align-items:center; }
+  .fam-card-head b{ font-size:14.5px; }
+  .fam-card .remove{ color:var(--error); font-size:12px; cursor:pointer; font-weight:700; background:none; border:none; min-height:32px; }
+  .fam-mini-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px; }
+  .fam-mini-grid .field{ margin-bottom:0; }
+  .fam-mini-grid .full{ grid-column:1/-1; }
+
+  .dup-box{ border-radius:var(--radius-md); padding:20px; text-align:left; width:100%; margin-bottom:20px; }
+  .dup-row{ display:flex; justify-content:space-between; font-size:13.5px; padding:7px 0; border-bottom:1px solid rgba(249,249,251,0.12); gap:12px; }
+  .dup-row span:first-child{ color:var(--silk-faint); }
+  .dup-row:last-child{ border-bottom:none; }
+
+  .progress-steps{ display:flex; width:100%; max-width:420px; margin:0 auto 34px; }
+  .pstep{ flex:1; display:flex; flex-direction:column; align-items:center; gap:6px; position:relative; }
+  .pdot{ width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; border:2px solid rgba(249,249,251,0.2); background:var(--base-2); color:var(--silk-dim); z-index:1; font-family:'IBM Plex Mono',monospace; }
+  .pstep.done .pdot{ background:var(--groom); border-color:var(--groom); color:var(--base); }
+  .pstep.active .pdot{ border-color:var(--groom-soft); color:var(--silk); }
+  .pstep::after{ content:''; position:absolute; top:13px; left:50%; width:100%; height:2px; background:rgba(249,249,251,0.14); }
+  .pstep:last-child::after{ display:none; }
+  .pstep.done::after{ background:var(--groom); }
+  .plabel{ font-size:9.5px; color:var(--silk-faint); }
+
+  .train-window{ width:220px; height:130px; border-radius:20px; margin:0 auto 20px; position:relative; overflow:hidden; border:2px solid var(--glass-border-gold); background:linear-gradient(180deg,#1C2350,#0D1127); }
+  .train-window .sky{ position:absolute; inset:0; background:linear-gradient(180deg,#2A3570,#0D1127 70%); }
+  .train-window .hills{ position:absolute; bottom:0; left:0; width:200%; height:40%; background:repeating-linear-gradient(100deg,#151B3B 0 40px, #1C2350 40px 80px); animation:scrollBg 6s linear infinite; }
+  @keyframes scrollBg{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
+  .train-window .family{ position:absolute; bottom:14px; left:50%; transform:translateX(-50%); font-size:26px; filter:drop-shadow(0 4px 8px rgba(0,0,0,.4)); }
+
+  .guide-card{ border-radius:var(--radius-lg); padding:22px; margin-bottom:14px; text-align:left; width:100%; }
+  .guide-card h3{ font-family:'Playfair Display','Noto Sans Devanagari','Noto Sans Telugu',serif; color:var(--groom-soft); font-size:19px; margin:0 0 10px; }
+  .guide-card.bride-guide h3{ color:var(--bride-soft); }
+  .guide-card p{ font-size:13.5px; color:var(--silk-dim); line-height:1.7; margin:0; }
+
+  .itinerary-scroll{ display:flex; gap:14px; overflow-x:auto; padding:6px 2px 14px; scroll-snap-type:x mandatory; width:100%; }
+  .itinerary-card{ flex:0 0 200px; scroll-snap-align:start; border-radius:var(--radius-md); padding:16px; }
+  .itinerary-card .day{ font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--groom-soft); }
+  .itinerary-card .ev{ font-family:'Playfair Display','Noto Sans Devanagari','Noto Sans Telugu',serif; font-size:16px; margin:6px 0; }
+  .itinerary-card .loc{ font-size:11.5px; color:var(--silk-faint); }
+
+  .weather-grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; width:100%; margin-bottom:14px; }
+  .weather-box{ border-radius:var(--radius-md); padding:18px; text-align:center; }
+  .weather-box .city{ font-family:'Playfair Display','Noto Sans Devanagari','Noto Sans Telugu',serif; font-size:16px; margin-bottom:6px; }
+  .weather-box .temp{ font-size:22px; font-weight:800; }
+  .weather-box .note{ font-size:11px; color:var(--silk-faint); margin-top:6px; }
+
+  .wa-btn{ display:inline-flex; align-items:center; gap:10px; text-decoration:none; color:var(--silk); font-weight:700; font-size:14px; padding:14px 26px; border-radius:999px; margin-top:10px; min-height:48px; }
+
+  .guide-hero{ position:relative; width:100%; text-align:center; padding:20px 0 34px; }
+  .guide-hero-glow{
+    position:absolute; top:-40px; left:50%; transform:translateX(-50%); width:280px; height:280px; z-index:0;
+    background:radial-gradient(circle, rgba(245,166,35,0.25), rgba(200,107,123,0.12) 55%, transparent 75%);
+    animation:heroGlowPulse 4s ease-in-out infinite;
+  }
+  @keyframes heroGlowPulse{ 0%,100%{ opacity:0.7; transform:translateX(-50%) scale(1); } 50%{ opacity:1; transform:translateX(-50%) scale(1.08); } }
+  .guide-check{ position:relative; z-index:1; margin-bottom:14px; }
+  .guide-check path#check-path{ stroke-dasharray:40; stroke-dashoffset:40; animation:checkDraw 0.8s var(--ease) forwards 0.3s; }
+  @keyframes checkDraw{ to{ stroke-dashoffset:0; } }
+  .guide-hero-title{ position:relative; z-index:1; font-size:clamp(30px,7vw,42px); }
+  .guide-hero-sub{ position:relative; z-index:1; }
+
+  .reveal{ opacity:0; transform:translateY(18px); animation:revealUp 0.7s var(--ease) forwards; }
+  .reveal:nth-of-type(1){ animation-delay:0.05s; }
+  .reveal:nth-of-type(2){ animation-delay:0.15s; }
+  .reveal:nth-of-type(3){ animation-delay:0.25s; }
+  .reveal:nth-of-type(4){ animation-delay:0.35s; }
+  .reveal:nth-of-type(5){ animation-delay:0.45s; }
+  @keyframes revealUp{ to{ opacity:1; transform:translateY(0); } }
+
+  .guide-actions{ display:flex; flex-direction:column; align-items:center; gap:12px; width:100%; margin-top:8px; }
+
+  .summary-row{ display:flex; justify-content:space-between; font-size:13.5px; padding:8px 0; border-bottom:1px solid rgba(249,249,251,0.1); gap:12px; }
+  .summary-row:last-child{ border-bottom:none; }
+  .summary-row span:first-child{ color:var(--silk-faint); }
+  .summary-row span:last-child{ font-weight:600; text-align:right; }
+
+  #screen-admin{ text-align:left; align-items:stretch; }
+  .admin-wrap{ max-width:760px; margin:0 auto; width:100%; }
+  .stat-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:12px; margin-bottom:24px; }
+  .stat-box{ border-radius:var(--radius-md); padding:16px; }
+  .stat-box .n{ font-family:'Playfair Display',serif; font-size:26px; color:var(--groom-soft); }
+  .stat-box .l{ font-size:10px; text-transform:uppercase; letter-spacing:.06em; opacity:.7; font-family:'IBM Plex Mono',monospace; }
+  table{ width:100%; border-collapse:collapse; border-radius:12px; overflow:hidden; font-size:12.5px; }
+  th{ text-align:left; padding:10px 12px; background:rgba(249,249,251,0.06); font-family:'IBM Plex Mono',monospace; font-size:10px; text-transform:uppercase; color:var(--silk-faint); }
+  td{ padding:10px 12px; border-top:1px solid rgba(249,249,251,0.08); }
+
+  .link-bottom{ text-align:center; padding:20px; font-size:11px; color:var(--silk-faint); font-family:'IBM Plex Mono',monospace; }
+  .link-bottom button{ background:none; border:none; color:var(--silk-faint); font-family:'IBM Plex Mono',monospace; font-size:11px; cursor:pointer; padding:6px 10px; text-decoration:underline; }
+
+  .toast{ position:fixed; bottom:24px; left:50%; transform:translateX(-50%); background:var(--base-3); border:1px solid var(--glass-border-gold); color:var(--silk); padding:13px 22px; border-radius:999px; font-size:13px; z-index:999; opacity:0; transition:opacity .3s ease; pointer-events:none; max-width:90vw; text-align:center; }
+  .toast.show{ opacity:1; }
+
+  #pin-modal{ position:fixed; inset:0; z-index:600; display:none; align-items:center; justify-content:center; background:rgba(13,17,39,0.72); backdrop-filter:blur(4px); padding:20px; }
+  #pin-modal.show{ display:flex; }
+  .pin-box{ padding:28px; border-radius:var(--radius-lg); max-width:300px; width:100%; text-align:center; border:1px solid var(--glass-border-gold); }
+  .pin-box h3{ font-family:'Playfair Display',serif; font-size:20px; margin:0 0 8px; color:var(--groom-soft); }
+  .pin-box p{ font-size:13px; color:var(--silk-dim); margin:0 0 18px; }
+  .pin-box input{ width:100%; text-align:center; letter-spacing:0.5em; font-size:22px; padding:14px; border-radius:var(--radius-sm); border:1.5px solid rgba(249,249,251,0.2); background:rgba(249,249,251,0.06); color:var(--silk); margin-bottom:16px; }
+  .pin-box input:focus{ outline:none; border-color:var(--groom); }
+  .pin-actions{ display:flex; gap:10px; justify-content:center; }
+
+  #ring-transition{ position:fixed; inset:0; z-index:500; display:none; align-items:center; justify-content:center; background:var(--base); overflow:hidden; }
+  #ring-transition.show{ display:flex; }
+  .ring{ position:absolute; border-radius:50%; border:2px solid var(--groom); opacity:0; }
+  .ring.rose{ border-color:var(--bride); }
+  .ring-1{ width:60px; height:60px; animation:ringExpand 1.3s var(--ease) forwards; }
+  .ring-2{ width:60px; height:60px; animation:ringExpand 1.3s var(--ease) forwards 0.12s; }
+  .ring-3{ width:60px; height:60px; animation:ringExpand 1.3s var(--ease) forwards 0.24s; }
+  .ring-4{ width:60px; height:60px; animation:ringExpand 1.3s var(--ease) forwards 0.36s; }
+  @keyframes ringExpand{
+    0%{ width:60px; height:60px; opacity:0; transform:rotate(0deg); }
+    15%{ opacity:1; }
+    100%{ width:1400px; height:1400px; opacity:0; transform:rotate(220deg); }
+  }
+  .ring-glow{ position:absolute; width:120px; height:120px; border-radius:50%; background:radial-gradient(circle,rgba(245,166,35,0.9),transparent 70%); animation:glowPulse 1.3s ease-in-out forwards; }
+  @keyframes glowPulse{ 0%{ transform:scale(0.3); opacity:0.9; } 100%{ transform:scale(3); opacity:0; } }
+
+  @media print{
+    body{ background:#fff !important; color:#1a1a1a !important; }
+    #nav, .link-bottom, .toast, #ring-transition, .guide-actions{ display:none !important; }
+    .screen{ padding:10px !important; min-height:auto !important; }
+    .glass, .guide-card, .weather-box, .itinerary-card, .summary-card, .guide-hero-glow{ background:#f7f2ea !important; backdrop-filter:none !important; border:1px solid #ddd !important; color:#1a1a1a !important; }
+    .guide-card h3{ color:#5C1A2B !important; }
+    .op-names, .guide-hero-title{ -webkit-text-fill-color:#1a1a1a !important; color:#1a1a1a !important; }
+    .sub{ color:#555 !important; }
+  }
+</style>
+</head>
+<body>
+
+<div id="nav">
+  <button class="nav-btn" onclick="goBack()" aria-label="Back">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+  </button>
+  <span class="nav-title" id="nav-title"></span>
+  <button class="nav-btn" onclick="goHome()" aria-label="Home">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+  </button>
+</div>
+
+<!-- LANGUAGE -->
+<div class="screen active" id="screen-language">
+  <div class="center">
+    <div class="eyebrow" data-i18n="chooseLangTag">Choose your language</div>
+    <h1 class="title" style="display:flex;align-items:center;justify-content:center;gap:0.15em">Ankita <svg width="0.85em" height="0.85em" viewBox="0 0 32 29"><path d="M16 28C16 28 1 18.5 1 8.8C1 3.9 4.9 1 9.2 1C12.3 1 14.9 2.8 16 5.4C17.1 2.8 19.7 1 22.8 1C27.1 1 31 3.9 31 8.8C31 18.5 16 28 16 28Z" fill="url(#heartGrad2)"/><defs><linearGradient id="heartGrad2" x1="1" y1="1" x2="31" y2="28" gradientUnits="userSpaceOnUse"><stop stop-color="#F5A623"/><stop offset="1" stop-color="#C86B7B"/></linearGradient></defs></svg> Vishal</h1>
+    <div class="lang-grid">
+      <button class="lang-btn" onclick="setLang('en')">English</button>
+      <button class="lang-btn" onclick="setLang('hi')">हिन्दी (Hindi)</button>
+      <button class="lang-btn" onclick="setLang('te')">తెలుగు (Telugu)</button>
+    </div>
+  </div>
+</div>
+
+<!-- OPENING -->
+<div class="screen" id="screen-opening">
+  <canvas id="particle-canvas"></canvas>
+  <div class="center">
+    <svg width="56" height="64" viewBox="0 0 64 72" fill="none">
+      <path class="flame" d="M32 8C32 8 22 22 22 32C22 39.7 26.5 45 32 45C37.5 45 42 39.7 42 32C42 22 32 8 32 8Z" fill="url(#fg)"/>
+      <ellipse cx="32" cy="52" rx="24" ry="7" fill="#0D1127" stroke="#F5A623" stroke-width="1.5"/>
+      <path d="M8 52C8 52 14 60 32 60C50 60 56 52 56 52" stroke="#F5A623" stroke-width="1.5" fill="none"/>
+      <defs><linearGradient id="fg" x1="32" y1="8" x2="32" y2="45" gradientUnits="userSpaceOnUse"><stop stop-color="#FFD68A"/><stop offset=".55" stop-color="#F5A623"/><stop offset="1" stop-color="#B87A10"/></linearGradient></defs>
+    </svg>
+    <p class="op-blessing" data-i18n="openingBlessing">"Two souls, one journey — blessed by both heavens."</p>
+    <h1 class="op-names">Ankita <svg class="heart-glyph" width="0.9em" height="0.9em" viewBox="0 0 32 29" style="font-style:normal"><path d="M16 28C16 28 1 18.5 1 8.8C1 3.9 4.9 1 9.2 1C12.3 1 14.9 2.8 16 5.4C17.1 2.8 19.7 1 22.8 1C27.1 1 31 3.9 31 8.8C31 18.5 16 28 16 28Z" fill="url(#heartGrad)" stroke="#FFD68A" stroke-width="0.6"/><defs><linearGradient id="heartGrad" x1="1" y1="1" x2="31" y2="28" gradientUnits="userSpaceOnUse"><stop stop-color="#F5A623"/><stop offset="1" stop-color="#C86B7B"/></linearGradient></defs></svg> Vishal</h1>
+    <p class="sub" data-i18n="openingLine">Two hearts, two families, two cultures — one forever.</p>
+    <button class="btn btn-primary" onclick="goTo('screen-select', true)" data-i18n="continueBtn">Continue</button>
+  </div>
+</div>
+
+<!-- SIDE SELECT -->
+<div class="screen" id="screen-select">
+  <div class="center">
+    <div class="eyebrow" data-i18n="whichSideTag">Who are you celebrating with?</div>
+    <h1 class="title" data-i18n="whichSideTitle">I am attending on behalf of</h1>
+    <div class="select-grid" id="select-grid">
+      <div class="side-card groom" id="card-groom" onclick="selectSide('groom')">
+        <svg class="motif-bg" viewBox="0 0 200 200"><g stroke="#F5A623" stroke-width="1" fill="none" opacity="0.9">
+          <circle cx="100" cy="100" r="70"/><circle cx="100" cy="100" r="50"/><circle cx="100" cy="100" r="30"/>
+          <path d="M100 30 L100 170 M30 100 L170 100 M50 50 L150 150 M150 50 L50 150"/>
+          <circle cx="100" cy="30" r="4"/><circle cx="100" cy="170" r="4"/><circle cx="30" cy="100" r="4"/><circle cx="170" cy="100" r="4"/>
+        </g></svg>
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#F5A623" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0116 0v2"/></svg>
+        <div class="name">Vishal</div>
+        <div class="place" data-i18n="hyderabadLabel">Hyderabad</div>
+      </div>
+      <div class="side-card bride" id="card-bride" onclick="selectSide('bride')">
+        <svg class="motif-bg" viewBox="0 0 200 200"><g stroke="#C86B7B" stroke-width="1" fill="none" opacity="0.9">
+          <path d="M100 20 C130 40 130 70 100 90 C70 70 70 40 100 20Z"/>
+          <path d="M100 90 C130 110 130 140 100 160 C70 140 70 110 100 90Z"/>
+          <path d="M40 100 C60 80 90 80 100 100 C90 120 60 120 40 100Z"/>
+          <path d="M160 100 C140 80 110 80 100 100 C110 120 140 120 160 100Z"/>
+          <circle cx="100" cy="100" r="6"/>
+        </g></svg>
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#C86B7B" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0116 0v2"/></svg>
+        <div class="name">Ankita</div>
+        <div class="place" data-i18n="lucknowLabel">Lucknow</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RSVP -->
+<div class="screen" id="screen-rsvp">
+  <div class="center">
+    <div class="eyebrow" id="rsvp-eyebrow">Groom's side</div>
+    <h1 class="title" id="rsvp-title">We would be honoured to celebrate this special day with you.</h1>
+    <p class="sub" data-i18n="rsvpSub">Will you be joining us?</p>
+    <div class="btn-row-h">
+      <button class="btn btn-primary" id="rsvp-yes-btn" style="max-width:160px" onclick="handleRsvp(true)" data-i18n="rsvpYes">Yes, I will be there!</button>
+      <button class="btn btn-secondary" style="max-width:160px" onclick="handleRsvp(false)" data-i18n="rsvpNo">Regretfully, no</button>
+    </div>
+  </div>
+</div>
+
+<!-- DECLINED -->
+<div class="screen" id="screen-declined">
+  <div class="center">
+    <svg width="48" height="48" viewBox="0 0 56 56" fill="none"><circle cx="28" cy="28" r="26" stroke="#F5A623" stroke-width="1.5"/><path d="M18 34c3-3 6-4 10-4s7 1 10 4" stroke="#F5A623" stroke-width="1.5" stroke-linecap="round"/><circle cx="21" cy="23" r="2" fill="#F5A623"/><circle cx="35" cy="23" r="2" fill="#F5A623"/></svg>
+    <h1 class="title" data-i18n="declinedTitle">We'll miss having you there</h1>
+    <p class="sub" data-i18n="declinedSub">We'd love for you to still be part of the day, wherever you are — here's the date, always saved for you.</p>
+    <button class="btn btn-primary" onclick="downloadIcs()" data-i18n="addToCalendar">Add to my calendar</button>
+    <button class="btn btn-ghost" onclick="showGuide()" style="margin-top:8px" data-i18n="seeGuideAnyway">See the wedding guide anyway</button>
+  </div>
+</div>
+
+<!-- TRAVEL MODE -->
+<div class="screen" id="screen-travel">
+  <div class="center">
+    <div class="progress-steps" id="progress-travel"></div>
+    <div class="eyebrow" data-i18n="travelEyebrow">Travel</div>
+    <h1 class="title" data-i18n="travelTitle">How will you be travelling?</h1>
+    <div class="btn-row">
+      <button class="btn btn-primary" id="train-btn" onclick="chooseTravel('train')">🚆 Train Journey — arranged by us</button>
+      <button class="btn btn-secondary" onclick="chooseTravel('flight')"><span>✈️</span> <span data-i18n="modeFlight">Flight</span></button>
+      <button class="btn btn-secondary" onclick="chooseTravel('car')"><span>🚗</span> <span data-i18n="modeCar">Car</span></button>
+      <button class="btn btn-secondary" onclick="chooseTravel('bus')"><span>🚌</span> <span data-i18n="modeBus">Bus</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- FLIGHT/CAR/BUS DETAILS -->
+<div class="screen" id="screen-flight-details">
+  <div class="center">
+    <h1 class="title" data-i18n="travelDetailsTitle">A few travel details</h1>
+    <p class="sub" id="fd-intro-line" data-i18n="travelDetailsIntroDefault">Let us know your plans so we can prepare for your arrival.</p>
+    <div class="field"><label data-i18n="phoneLabel">Phone number</label><input type="tel" inputmode="numeric" id="fd-phone" data-i18n-placeholder="phonePlaceholder" placeholder="10-digit mobile number"></div>
+    <div class="field"><label data-i18n="arrivalLabel">Date of arrival</label><input type="date" id="fd-arrival"></div>
+    <div class="field"><label data-i18n="departureLabel">Departure date</label><input type="date" id="fd-departure"></div>
+    <div class="field"><label data-i18n="guestCountLabel">Guest count</label><input type="tel" inputmode="numeric" id="fd-count" value="1"></div>
+    <div class="field"><label data-i18n="accommodationLabel">Accommodation required?</label><select id="fd-accom"><option value="yes" data-i18n="accomYes">Yes, please arrange</option><option value="no" data-i18n="accomNo">No, we're sorted</option></select></div>
+    <button class="btn btn-primary" onclick="submitFlightDetails()" data-i18n="continueBtn">Continue</button>
+  </div>
+</div>
+
+<!-- PHONE ENTRY (for train, duplicate check) -->
+<div class="screen" id="screen-phone-check">
+  <div class="center">
+    <div class="train-window">
+      <div class="sky"></div><div class="hills"></div><div class="family">🧑‍🤝‍🧑</div>
+    </div>
+    <h1 class="title" data-i18n="findFamilyTitle">Let's find your family</h1>
+    <p class="sub" id="phone-check-family-line" data-i18n="trainArrangedDefault">Train travel arranged by us.</p>
+    <p class="sub" style="margin-top:-18px" data-i18n="findFamilySub">Enter the phone number of the head of your family — we'll check if you're already registered.</p>
+    <div class="field"><label data-i18n="phoneLabel">Phone number</label><input type="tel" inputmode="numeric" id="phone-check-input" data-i18n-placeholder="phonePlaceholder" placeholder="10-digit mobile number"></div>
+    <button class="btn btn-primary" onclick="checkPhone()" data-i18n="continueBtn">Continue</button>
+  </div>
+</div>
+
+<!-- DUPLICATE FOUND -->
+<div class="screen" id="screen-duplicate">
+  <div class="center">
+    <h1 class="title" data-i18n="duplicateTitle">Ohh, looks like you're already registered! 👋</h1>
+    <p class="sub" id="dup-registered-by" data-i18n="duplicateRegisteredDefault">This family was already registered with us.</p>
+    <div class="dup-box glass" id="dup-details"></div>
+    <div class="btn-row-h">
+      <button class="btn btn-primary" style="max-width:170px" onclick="showGuide()" data-i18n="duplicateConfirm">Yes, this is correct</button>
+      <button class="btn btn-secondary" style="max-width:170px" onclick="goTo('screen-family', true)" data-i18n="duplicateUpdate">Update details</button>
+    </div>
+  </div>
+</div>
+
+<!-- FAMILY MEMBERS -->
+<div class="screen" id="screen-family">
+  <div class="center" style="max-width:520px">
+    <h1 class="title" data-i18n="familyTitle">Who's travelling with you?</h1>
+    <p class="sub" data-i18n="familySub">Add every family member joining the train journey. You can add as many as you need.</p>
+    <div id="family-list" style="width:100%"></div>
+    <button class="btn btn-secondary" onclick="addFamilyMember()" data-i18n="addMemberBtn">+ Add family member</button>
+    <div style="height:18px"></div>
+    <button class="btn btn-primary" onclick="submitFamily()" data-i18n="saveContinueBtn">Save & continue</button>
+  </div>
+</div>
+
+<!-- RETURN TICKET -->
+<div class="screen" id="screen-return">
+  <div class="center">
+    <h1 class="title" data-i18n="returnTitle">Would you like us to book your return tickets too?</h1>
+    <div class="btn-row-h">
+      <button class="btn btn-primary" style="max-width:140px" onclick="handleReturn('yes')" data-i18n="returnYes">Yes, please</button>
+      <button class="btn btn-secondary" style="max-width:140px" onclick="handleReturn('no')" data-i18n="returnNo">No, sorted</button>
+      <button class="btn btn-ghost" style="max-width:140px" onclick="handleReturn('later')" data-i18n="returnLater">Decide later</button>
+    </div>
+  </div>
+</div>
+
+<!-- GUIDE / THANK YOU -->
+<div class="screen" id="screen-guide">
+  <div class="center" style="max-width:580px">
+    <div id="guide-printable" style="width:100%">
+
+      <div class="guide-hero">
+        <div class="guide-hero-glow"></div>
+        <svg class="guide-check" width="60" height="60" viewBox="0 0 60 60" fill="none">
+          <circle cx="30" cy="30" r="27" stroke="url(#checkGrad)" stroke-width="2"/>
+          <path id="check-path" d="M18 31l8 8 16-18" stroke="url(#checkGrad)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <defs><linearGradient id="checkGrad" x1="3" y1="3" x2="57" y2="57" gradientUnits="userSpaceOnUse"><stop stop-color="#F5A623"/><stop offset="1" stop-color="#C86B7B"/></linearGradient></defs>
+        </svg>
+        <h1 class="title guide-hero-title" data-i18n="guideHeroTitle">You're all set</h1>
+        <p class="sub guide-hero-sub" data-i18n="guideHeroSub">We can't wait to celebrate with you. Here's everything for the days ahead.</p>
+      </div>
+
+      <div class="guide-card glass reveal" id="summary-card" style="border:1px solid var(--glass-border-gold)">
+        <h3 data-i18n="summaryTitle">Your RSVP, at a glance</h3>
+        <div id="summary-body"></div>
+      </div>
+
+      <div class="guide-card glass reveal" id="guide-itinerary-groom" style="border:1px solid var(--glass-border-gold)">
+        <h3 data-i18n="groomJourneyTitle">Groom's Journey — Hyderabad ✦ Lucknow</h3>
+        <div class="itinerary-scroll">
+          <div class="itinerary-card glass"><div class="day">25 NOV</div><div class="ev" data-i18n="evKotnam">Kotnam Ritual</div><div class="loc" data-i18n="hyderabadLabel">Hyderabad</div></div>
+          <div class="itinerary-card glass"><div class="day">26–27 NOV</div><div class="ev" data-i18n="evJourneyLucknow">Journey to Lucknow</div><div class="loc" data-i18n="byTrain">By train</div></div>
+          <div class="itinerary-card glass"><div class="day">28 NOV</div><div class="ev" data-i18n="evArrival">Arrival</div><div class="loc" data-i18n="lucknowLabel">Lucknow</div></div>
+          <div class="itinerary-card glass"><div class="day">29 NOV AM</div><div class="ev" data-i18n="evHaldi">Haldi</div><div class="loc" data-i18n="lucknowLabel">Lucknow</div></div>
+          <div class="itinerary-card glass"><div class="day">29 NOV PM</div><div class="ev" data-i18n="evMehendi">Mehendi · Engagement · Sangeet</div><div class="loc" data-i18n="lucknowLabel">Lucknow</div></div>
+          <div class="itinerary-card glass"><div class="day">30 NOV</div><div class="ev" data-i18n="evWedding">The Wedding</div><div class="loc" data-i18n="lucknowLabel">Lucknow</div></div>
+        </div>
+      </div>
+
+      <div class="guide-card glass bride-guide reveal" style="border:1px solid var(--glass-border-rose)">
+        <h3 data-i18n="brideJourneyTitle">Bride's Journey — Hyderabad Celebrations</h3>
+        <div class="itinerary-scroll">
+          <div class="itinerary-card glass"><div class="day">1–2 DEC</div><div class="ev" data-i18n="evReturnHyd">Return to Hyderabad</div><div class="loc" data-i18n="byTrain">By train</div></div>
+          <div class="itinerary-card glass"><div class="day">3 DEC</div><div class="ev" data-i18n="evRest">Rest day</div><div class="loc" data-i18n="hyderabadLabel">Hyderabad</div></div>
+          <div class="itinerary-card glass"><div class="day">4 DEC · 9:30 AM</div><div class="ev" data-i18n="evSouthIndian">South Indian Style Marriage</div><div class="loc" data-i18n="hyderabadLabel">Hyderabad</div></div>
+          <div class="itinerary-card glass"><div class="day">4 DEC · 7 PM</div><div class="ev" data-i18n="evReception">Reception</div><div class="loc" data-i18n="hyderabadLabel">Hyderabad</div></div>
+          <div class="itinerary-card glass"><div class="day">5 DEC</div><div class="ev" data-i18n="evKatha">Sathyanarayana Katha</div><div class="loc" data-i18n="hyderabadLabel">Hyderabad</div></div>
+        </div>
+      </div>
+
+      <div class="guide-card glass reveal">
+        <h3 data-i18n="wearTitle">What to Wear</h3>
+        <div><span class="outfit-chip outfit-yellow" data-i18n="wearHaldi">Haldi: Yellow (+ sunglasses!)</span><span class="outfit-chip outfit-green" data-i18n="wearMehendi">Mehendi: Green</span><span class="outfit-chip outfit-western" data-i18n="wearSangeet">Sangeet: Western</span></div>
+      </div>
+
+      <div class="guide-card glass reveal">
+        <h3 data-i18n="weatherTitle">Weather Intelligence</h3>
+        <div class="weather-grid">
+          <div class="weather-box glass"><div class="city" data-i18n="lucknowLabel">Lucknow</div><div class="temp">15°–22°C</div><div class="note" data-i18n="weatherLucknowNote">Cool autumn evenings — light traditional layers or an elegant shawl</div></div>
+          <div class="weather-box glass"><div class="city" data-i18n="hyderabadLabel">Hyderabad</div><div class="temp">22°–28°C</div><div class="note" data-i18n="weatherHyderabadNote">Pleasant tropical warmth — perfect for traditional silks</div></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="guide-actions">
+      <button class="btn btn-primary" onclick="downloadIcs()" data-i18n="syncCalendarBtn">Sync Wedding to Device Calendar</button>
+      <button class="btn btn-secondary" onclick="downloadGuidePdf()" data-i18n="downloadPdfBtn">Download this page (PDF)</button>
+      <a class="wa-btn glass" id="wa-link" style="border:1px solid var(--glass-border-gold)" href="https://wa.me/917842500005" target="_blank">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="#F5A623"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.36 5.07L2 22l5.07-1.33A9.94 9.94 0 0012 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm5.2 14.2c-.22.62-1.28 1.18-1.77 1.24-.45.06-1.02.09-1.65-.1-.38-.12-.87-.28-1.5-.55-2.64-1.14-4.36-3.8-4.5-3.98-.13-.18-1.08-1.44-1.08-2.75 0-1.3.68-1.94.92-2.2.24-.26.53-.33.7-.33h.5c.16 0 .38-.03.58.44.22.53.75 1.83.82 1.96.07.13.11.29.02.47-.09.18-.14.29-.27.44-.14.16-.29.36-.42.48-.14.13-.29.28-.12.55.16.27.72 1.19 1.55 1.93 1.07.95 1.97 1.25 2.24 1.39.27.13.43.11.59-.07.16-.18.68-.79.86-1.06.18-.27.36-.22.6-.13.24.09 1.53.72 1.79.85.27.13.45.2.51.31.07.11.07.63-.15 1.25z"/></svg>
+        <span id="wa-label">Message us on WhatsApp</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN (kept in English — organizer-facing, not translated) -->
+<div class="screen" id="screen-admin">
+  <div class="admin-wrap">
+    <h1 class="title">Wedding Control Center</h1>
+    <div class="stat-grid" id="admin-stats"></div>
+    <div style="display:flex;gap:10px;margin-bottom:16px">
+      <button class="btn btn-secondary" style="width:auto" onclick="exportCsv()">Export CSV</button>
+      <button class="btn btn-ghost" style="width:auto" onclick="goTo('screen-language', true)">← Back to guest view</button>
+    </div>
+    <div class="glass" style="padding:4px; overflow-x:auto">
+      <table id="admin-table"><thead><tr><th>Phone</th><th>Side</th><th>RSVP</th><th>Travel</th><th>Members</th><th>Return</th></tr></thead><tbody></tbody></table>
+    </div>
+  </div>
+</div>
+
+<div class="link-bottom">Ankita ✦ Vishal · <button type="button" onclick="openAdmin()">admin</button></div>
+<div class="toast" id="toast"></div>
+
+<div id="pin-modal">
+  <div class="pin-box glass">
+    <h3>Admin access</h3>
+    <p>Enter the PIN to view the control center.</p>
+    <input type="tel" inputmode="numeric" maxlength="6" id="pin-input" placeholder="••••" autocomplete="off">
+    <div class="pin-actions">
+      <button class="btn btn-ghost" style="width:auto" onclick="closePinModal()">Cancel</button>
+      <button class="btn btn-primary" style="width:auto" onclick="submitPin()">Unlock</button>
+    </div>
+  </div>
+</div>
+
+<div id="ring-transition">
+  <div class="ring-glow"></div>
+  <div class="ring ring-1"></div>
+  <div class="ring ring-2 rose"></div>
+  <div class="ring ring-3"></div>
+  <div class="ring ring-4 rose"></div>
+</div>
+
+<script>
+/* ================= FULL TRANSLATION DICTIONARY ================= */
+const i18n = {
+en:{
+  chooseLangTag:"Choose your language",
+  openingBlessing:"\"Two souls, one journey — blessed by both heavens.\"",
+  openingLine:"Two hearts, two families, two cultures — one forever.",
+  continueBtn:"Continue",
+  whichSideTag:"Who are you celebrating with?",
+  whichSideTitle:"I am attending on behalf of",
+  hyderabadLabel:"Hyderabad", lucknowLabel:"Lucknow", byTrain:"By train",
+  rsvpSub:"Will you be joining us?", rsvpYes:"Yes, I will be there!", rsvpNo:"Regretfully, no",
+  rsvpGroomEyebrow:"Groom's side · Hyderabad", rsvpGroomTitle:"We would be honoured to celebrate this special day with you.",
+  rsvpBrideEyebrow:"Bride's side · Lucknow", rsvpBrideTitle:"Please join us to witness the South Indian style wedding, reception, and Sathyanarayana Katha in Hyderabad.",
+  declinedTitle:"We'll miss having you there",
+  declinedSub:"We'd love for you to still be part of the day, wherever you are — here's the date, always saved for you.",
+  addToCalendar:"Add to my calendar", seeGuideAnyway:"See the wedding guide anyway",
+  travelEyebrow:"Travel", travelTitle:"How will you be travelling?",
+  modeTrain:"Train Journey — arranged by us", modeTrainFamily:"Train Journey — arranged by the {family} family",
+  modeFlight:"Flight", modeCar:"Car", modeBus:"Bus",
+  travelDetailsTitle:"A few travel details",
+  travelDetailsIntroFlight:"Wonderful — share your flight plans and we'll have everything ready for you at the other end.",
+  travelDetailsIntroCar:"Driving down? Let us know your dates so we can plan for you.",
+  travelDetailsIntroBus:"Let us know your dates so we can plan for you.",
+  travelDetailsIntroDefault:"Let us know your plans so we can prepare for your arrival.",
+  phoneLabel:"Phone number", phonePlaceholder:"10-digit mobile number",
+  arrivalLabel:"Date of arrival", departureLabel:"Departure date", guestCountLabel:"Guest count",
+  accommodationLabel:"Accommodation required?", accomYes:"Yes, please arrange", accomNo:"No, we're sorted",
+  findFamilyTitle:"Let's find your family",
+  trainArrangedDefault:"Train travel arranged by us.", trainArrangedFamily:"Train travel arranged by the {family} family.",
+  findFamilySub:"Enter the phone number of the head of your family — we'll check if you're already registered.",
+  duplicateTitle:"Ohh, looks like you're already registered! 👋",
+  duplicateRegisteredDefault:"This family was already registered with us.",
+  duplicateRegisteredName:"This family was already registered by {name}. Here's what's on file:",
+  duplicateHead:"Head of family", duplicateMembers:"Family members", duplicateTravelMode:"Travel mode",
+  duplicateReturn:"Return ticket", duplicateNotDecided:"not yet decided", duplicateRegisteredOn:"Registered",
+  duplicateConfirm:"Yes, this is correct", duplicateUpdate:"Update details",
+  familyTitle:"Who's travelling with you?",
+  familySub:"Add every family member joining the train journey. You can add as many as you need.",
+  addMemberBtn:"+ Add family member", saveContinueBtn:"Save & continue",
+  headOfFamily:"Head of Family", familyMemberN:"Family Member {n}", removeBtn:"Remove",
+  fullNameLabel:"Full name", relationshipLabel:"Relationship", dobLabel:"Date of birth", genderLabel:"Gender",
+  genderSelectOpt:"Select", genderMale:"Male", genderFemale:"Female", genderOther:"Other",
+  phoneOptionalLabel:"Phone (optional)", govIdLabel:"Govt. ID (optional)", govIdHint:"Used only for train ticket booking · masked for privacy",
+  berthLabel:"Berth preference", berthNone:"No preference", berthLower:"Lower", berthMiddle:"Middle", berthUpper:"Upper", berthSideLower:"Side Lower",
+  medicalLabel:"Medical needs", medicalPlaceholder:"Optional",
+  returnTitle:"Would you like us to book your return tickets too?",
+  returnYes:"Yes, please", returnNo:"No, sorted", returnLater:"Decide later",
+  guideHeroTitle:"You're all set", guideHeroSub:"We can't wait to celebrate with you. Here's everything for the days ahead.",
+  summaryTitle:"Your RSVP, at a glance",
+  summaryAttendingAs:"Attending as", summaryGroomSide:"Vishal's side · Hyderabad", summaryBrideSide:"Ankita's side · Lucknow",
+  summaryRsvp:"RSVP", summaryJoining:"Joining us", summaryNotAttending:"Not attending",
+  summaryTravelMode:"Travel mode", summaryFamilyMembers:"Family members", summaryNoneAdded:"None added yet",
+  summaryArrival:"Arrival", summaryDeparture:"Departure", summaryGuests:"Guests travelling",
+  summaryAccommodation:"Accommodation", summaryRequested:"Requested", summaryNotNeeded:"Not needed",
+  summaryReturnTickets:"Return tickets", summaryDecidingLater:"Deciding later", summaryPhone:"Registered phone",
+  groomJourneyTitle:"Groom's Journey — Hyderabad ✦ Lucknow", brideJourneyTitle:"Bride's Journey — Hyderabad Celebrations",
+  evKotnam:"Kotnam Ritual", evJourneyLucknow:"Journey to Lucknow", evArrival:"Arrival", evHaldi:"Haldi",
+  evMehendi:"Mehendi · Engagement · Sangeet", evWedding:"The Wedding", evReturnHyd:"Return to Hyderabad",
+  evRest:"Rest day", evSouthIndian:"South Indian Style Marriage", evReception:"Reception", evKatha:"Sathyanarayana Katha",
+  wearTitle:"What to Wear", wearHaldi:"Haldi: Yellow (+ sunglasses!)", wearMehendi:"Mehendi: Green", wearSangeet:"Sangeet: Western",
+  weatherTitle:"Weather Intelligence",
+  weatherLucknowNote:"Cool autumn evenings — light traditional layers or an elegant shawl",
+  weatherHyderabadNote:"Pleasant tropical warmth — perfect for traditional silks",
+  syncCalendarBtn:"Sync Wedding to Device Calendar", downloadPdfBtn:"Download this page (PDF)",
+  waLabelGroom:"Message Vishal's side on WhatsApp", waLabelBride:"Message Ankita's side on WhatsApp",
+  toastInvalidPhone:"Please enter a valid 10-digit phone number",
+  toastAddHeadName:"Please add at least the head of family name",
+  toastSaveError:"Could not save — please check your connection",
+  toastCalendarOpening:"Opening your calendar file — tap \"Add\" if prompted",
+  toastCalendarError:"Could not open the calendar file on this device — try again from your phone's browser",
+  toastPrintOpening:"Opening print dialog — choose \"Save as PDF\"",
+  toastIncorrectPin:"Incorrect PIN"
+},
+hi:{
+  chooseLangTag:"अपनी भाषा चुनें",
+  openingBlessing:"\"दो आत्माएँ, एक सफ़र — दोनों आशीर्वादों से धन्य।\"",
+  openingLine:"दो दिल, दो परिवार, दो संस्कृतियाँ — एक साथ हमेशा के लिए।",
+  continueBtn:"आगे बढ़ें",
+  whichSideTag:"आप किसकी ओर से आ रहे हैं?",
+  whichSideTitle:"मैं इनकी ओर से शामिल हो रहा/रही हूँ",
+  hyderabadLabel:"हैदराबाद", lucknowLabel:"लखनऊ", byTrain:"ट्रेन से",
+  rsvpSub:"क्या आप हमारे साथ शामिल होंगे?", rsvpYes:"हाँ, मैं वहाँ ज़रूर आऊँगा/आऊँगी!", rsvpNo:"क्षमा करें, इस बार नहीं",
+  rsvpGroomEyebrow:"वर पक्ष · हैदराबाद", rsvpGroomTitle:"इस खास दिन को आपके साथ मनाना हमारे लिए सम्मान की बात होगी।",
+  rsvpBrideEyebrow:"वधू पक्ष · लखनऊ", rsvpBrideTitle:"कृपया हैदराबाद में दक्षिण भारतीय शैली के विवाह, स्वागत समारोह और सत्यनारायण कथा में शामिल हों।",
+  declinedTitle:"आपकी कमी बहुत खलेगी",
+  declinedSub:"हम चाहेंगे कि आप जहाँ भी हों, इस दिन का हिस्सा बने रहें — यह तारीख हमेशा आपके लिए सहेजी गई है।",
+  addToCalendar:"अपने कैलेंडर में जोड़ें", seeGuideAnyway:"फिर भी शादी की गाइड देखें",
+  travelEyebrow:"यात्रा", travelTitle:"आप कैसे यात्रा करेंगे?",
+  modeTrain:"ट्रेन यात्रा — हमारे द्वारा आयोजित", modeTrainFamily:"ट्रेन यात्रा — {family} परिवार द्वारा आयोजित",
+  modeFlight:"फ्लाइट", modeCar:"कार", modeBus:"बस",
+  travelDetailsTitle:"कुछ यात्रा विवरण",
+  travelDetailsIntroFlight:"बहुत बढ़िया — अपनी फ्लाइट की जानकारी दें, हम आपके पहुँचने तक सब कुछ तैयार रखेंगे।",
+  travelDetailsIntroCar:"कार से आ रहे हैं? कृपया अपनी तारीखें बताएं ताकि हम तैयारी कर सकें।",
+  travelDetailsIntroBus:"कृपया अपनी तारीखें बताएं ताकि हम तैयारी कर सकें।",
+  travelDetailsIntroDefault:"कृपया अपनी योजना बताएं ताकि हम आपके आगमन की तैयारी कर सकें।",
+  phoneLabel:"फ़ोन नंबर", phonePlaceholder:"10 अंकों का मोबाइल नंबर",
+  arrivalLabel:"आगमन की तारीख", departureLabel:"प्रस्थान की तारीख", guestCountLabel:"मेहमानों की संख्या",
+  accommodationLabel:"क्या ठहरने की व्यवस्था चाहिए?", accomYes:"हाँ, कृपया व्यवस्था करें", accomNo:"नहीं, हम व्यवस्थित हैं",
+  findFamilyTitle:"आइए आपका परिवार खोजें",
+  trainArrangedDefault:"ट्रेन यात्रा हमारे द्वारा आयोजित।", trainArrangedFamily:"ट्रेन यात्रा {family} परिवार द्वारा आयोजित।",
+  findFamilySub:"अपने परिवार के मुखिया का फ़ोन नंबर दर्ज करें — हम जाँच लेंगे कि आप पहले से पंजीकृत हैं या नहीं।",
+  duplicateTitle:"ओह, लगता है आप पहले से पंजीकृत हैं! 👋",
+  duplicateRegisteredDefault:"यह परिवार पहले से हमारे पास पंजीकृत है।",
+  duplicateRegisteredName:"यह परिवार पहले ही {name} द्वारा पंजीकृत किया जा चुका है। यहाँ विवरण है:",
+  duplicateHead:"परिवार के मुखिया", duplicateMembers:"परिवार के सदस्य", duplicateTravelMode:"यात्रा का तरीका",
+  duplicateReturn:"वापसी टिकट", duplicateNotDecided:"अभी तय नहीं", duplicateRegisteredOn:"पंजीकृत तिथि",
+  duplicateConfirm:"हाँ, यह सही है", duplicateUpdate:"विवरण अपडेट करें",
+  familyTitle:"आपके साथ कौन यात्रा कर रहा है?",
+  familySub:"ट्रेन यात्रा में शामिल हर परिवार सदस्य को जोड़ें। आप जितने चाहें उतने जोड़ सकते हैं।",
+  addMemberBtn:"+ परिवार सदस्य जोड़ें", saveContinueBtn:"सहेजें और आगे बढ़ें",
+  headOfFamily:"परिवार के मुखिया", familyMemberN:"परिवार सदस्य {n}", removeBtn:"हटाएं",
+  fullNameLabel:"पूरा नाम", relationshipLabel:"रिश्ता", dobLabel:"जन्म तिथि", genderLabel:"लिंग",
+  genderSelectOpt:"चुनें", genderMale:"पुरुष", genderFemale:"महिला", genderOther:"अन्य",
+  phoneOptionalLabel:"फ़ोन (वैकल्पिक)", govIdLabel:"सरकारी पहचान पत्र (वैकल्पिक)", govIdHint:"केवल ट्रेन टिकट बुकिंग के लिए · गोपनीयता हेतु छिपा हुआ",
+  berthLabel:"बर्थ पसंद", berthNone:"कोई पसंद नहीं", berthLower:"निचली", berthMiddle:"मध्य", berthUpper:"ऊपरी", berthSideLower:"साइड लोअर",
+  medicalLabel:"चिकित्सा आवश्यकताएं", medicalPlaceholder:"वैकल्पिक",
+  returnTitle:"क्या आप चाहेंगे कि हम आपकी वापसी टिकट भी बुक करें?",
+  returnYes:"हाँ, कृपया", returnNo:"नहीं, व्यवस्थित है", returnLater:"बाद में तय करेंगे",
+  guideHeroTitle:"आप तैयार हैं", guideHeroSub:"हमें आपके साथ जश्न मनाने का बेसब्री से इंतज़ार है। आने वाले दिनों के लिए यहाँ सब कुछ है।",
+  summaryTitle:"आपका RSVP, एक नज़र में",
+  summaryAttendingAs:"शामिल हो रहे हैं", summaryGroomSide:"विशाल की ओर से · हैदराबाद", summaryBrideSide:"अंकिता की ओर से · लखनऊ",
+  summaryRsvp:"RSVP", summaryJoining:"शामिल हो रहे हैं", summaryNotAttending:"शामिल नहीं हो रहे",
+  summaryTravelMode:"यात्रा का तरीका", summaryFamilyMembers:"परिवार के सदस्य", summaryNoneAdded:"अभी तक कोई नहीं जोड़ा गया",
+  summaryArrival:"आगमन", summaryDeparture:"प्रस्थान", summaryGuests:"यात्रा करने वाले मेहमान",
+  summaryAccommodation:"ठहरने की व्यवस्था", summaryRequested:"अनुरोध किया गया", summaryNotNeeded:"आवश्यकता नहीं",
+  summaryReturnTickets:"वापसी टिकट", summaryDecidingLater:"बाद में तय करेंगे", summaryPhone:"पंजीकृत फ़ोन नंबर",
+  groomJourneyTitle:"वर की यात्रा — हैदराबाद ✦ लखनऊ", brideJourneyTitle:"वधू की यात्रा — हैदराबाद समारोह",
+  evKotnam:"कोटनम अनुष्ठान", evJourneyLucknow:"लखनऊ की यात्रा", evArrival:"आगमन", evHaldi:"हल्दी",
+  evMehendi:"मेहंदी · सगाई · संगीत", evWedding:"विवाह समारोह", evReturnHyd:"हैदराबाद वापसी",
+  evRest:"विश्राम दिवस", evSouthIndian:"दक्षिण भारतीय शैली विवाह", evReception:"स्वागत समारोह", evKatha:"सत्यनारायण कथा",
+  wearTitle:"क्या पहनें", wearHaldi:"हल्दी: पीला (+ धूप का चश्मा!)", wearMehendi:"मेहंदी: हरा", wearSangeet:"संगीत: वेस्टर्न आउटफिट",
+  weatherTitle:"मौसम की जानकारी",
+  weatherLucknowNote:"ठंडी शरद ऋतु की शामें — हल्के पारंपरिक कपड़े या एक सुंदर शॉल लाएं",
+  weatherHyderabadNote:"सुहावनी उष्णकटिबंधीय गर्मी — पारंपरिक सिल्क के लिए एकदम सही",
+  syncCalendarBtn:"शादी को अपने डिवाइस कैलेंडर में जोड़ें", downloadPdfBtn:"यह पेज डाउनलोड करें (PDF)",
+  waLabelGroom:"विशाल पक्ष को WhatsApp पर संदेश भेजें", waLabelBride:"अंकिता पक्ष को WhatsApp पर संदेश भेजें",
+  toastInvalidPhone:"कृपया 10 अंकों का सही फ़ोन नंबर दर्ज करें",
+  toastAddHeadName:"कृपया कम से कम परिवार के मुखिया का नाम जोड़ें",
+  toastSaveError:"सहेज नहीं सके — कृपया अपना इंटरनेट कनेक्शन जांचें",
+  toastCalendarOpening:"आपकी कैलेंडर फ़ाइल खोली जा रही है — पूछे जाने पर \"Add\" दबाएं",
+  toastCalendarError:"इस डिवाइस पर कैलेंडर फ़ाइल नहीं खुल सकी — कृपया अपने फ़ोन के ब्राउज़र से पुनः प्रयास करें",
+  toastPrintOpening:"प्रिंट डायलॉग खुल रहा है — \"Save as PDF\" चुनें",
+  toastIncorrectPin:"गलत पिन"
+},
+te:{
+  chooseLangTag:"మీ భాషను ఎంచుకోండి",
+  openingBlessing:"\"రెండు ఆత్మలు, ఒకే ప్రయాణం — రెండు దీవెనలతో ఆశీర్వదించబడినవి.\"",
+  openingLine:"రెండు హృదయాలు, రెండు కుటుంబాలు, రెండు సంస్కృతులు — ఎప్పటికీ ఒక్కటిగా.",
+  continueBtn:"కొనసాగించండి",
+  whichSideTag:"మీరు ఎవరి తరపున హాజరవుతున్నారు?",
+  whichSideTitle:"నేను వీరి తరపున హాజరవుతున్నాను",
+  hyderabadLabel:"హైదరాబాద్", lucknowLabel:"లక్నో", byTrain:"రైలులో",
+  rsvpSub:"మీరు మాతో పాటు హాజరవుతారా?", rsvpYes:"అవును, నేను తప్పకుండా వస్తాను!", rsvpNo:"క్షమించండి, ఈసారి కుదరదు",
+  rsvpGroomEyebrow:"వరుడి తరపు · హైదరాబాద్", rsvpGroomTitle:"ఈ ప్రత్యేక దినాన్ని మీతో కలిసి జరుపుకోవడం మాకు గౌరవంగా ఉంటుంది.",
+  rsvpBrideEyebrow:"వధువు తరపు · లక్నో", rsvpBrideTitle:"దయచేసి హైదరాబాద్‌లో దక్షిణ భారత శైలి వివాహం, రిసెప్షన్, సత్యనారాయణ కథలో పాల్గొనండి.",
+  declinedTitle:"మీరు లేకపోవడం మాకు లోటుగా ఉంటుంది",
+  declinedSub:"మీరు ఎక్కడున్నా ఈ రోజులో భాగంగా ఉండాలని మేము కోరుకుంటున్నాము — ఈ తేదీ ఎప్పటికీ మీ కోసం భద్రపరచబడింది.",
+  addToCalendar:"నా క్యాలెండర్‌కు జోడించండి", seeGuideAnyway:"అయినా వివాహ గైడ్ చూడండి",
+  travelEyebrow:"ప్రయాణం", travelTitle:"మీరు ఎలా ప్రయాణిస్తారు?",
+  modeTrain:"రైలు ప్రయాణం — మా ఏర్పాటు", modeTrainFamily:"రైలు ప్రయాణం — {family} కుటుంబం ఏర్పాటు చేసింది",
+  modeFlight:"విమానం", modeCar:"కారు", modeBus:"బస్సు",
+  travelDetailsTitle:"కొన్ని ప్రయాణ వివరాలు",
+  travelDetailsIntroFlight:"చాలా బాగుంది — మీ విమాన ప్రణాళికలు తెలియజేయండి, మీరు చేరుకునే సమయానికి అంతా సిద్ధంగా ఉంచుతాము.",
+  travelDetailsIntroCar:"కారులో వస్తున్నారా? మేము ప్రణాళిక వేయడానికి మీ తేదీలు తెలియజేయండి.",
+  travelDetailsIntroBus:"మేము ప్రణాళిక వేయడానికి మీ తేదీలు తెలియజేయండి.",
+  travelDetailsIntroDefault:"మీ రాకకు సిద్ధం కావడానికి మీ ప్రణాళికలు తెలియజేయండి.",
+  phoneLabel:"ఫోన్ నంబర్", phonePlaceholder:"10 అంకెల మొబైల్ నంబర్",
+  arrivalLabel:"రాక తేదీ", departureLabel:"బయలుదేరే తేదీ", guestCountLabel:"అతిథుల సంఖ్య",
+  accommodationLabel:"వసతి కావాలా?", accomYes:"అవును, దయచేసి ఏర్పాటు చేయండి", accomNo:"లేదు, మాకు ఏర్పాటు ఉంది",
+  findFamilyTitle:"మీ కుటుంబాన్ని కనుగొందాం",
+  trainArrangedDefault:"రైలు ప్రయాణం మా ఏర్పాటు.", trainArrangedFamily:"రైలు ప్రయాణం {family} కుటుంబం ఏర్పాటు చేసింది.",
+  findFamilySub:"మీ కుటుంబ పెద్ద ఫోన్ నంబర్ నమోదు చేయండి — మీరు ఇప్పటికే నమోదయ్యారో లేదో మేము తనిఖీ చేస్తాము.",
+  duplicateTitle:"ఓహ్, మీరు ఇప్పటికే నమోదయ్యారు అనిపిస్తోంది! 👋",
+  duplicateRegisteredDefault:"ఈ కుటుంబం ఇప్పటికే మా వద్ద నమోదైంది.",
+  duplicateRegisteredName:"ఈ కుటుంబాన్ని ఇప్పటికే {name} నమోదు చేశారు. వివరాలు ఇక్కడ ఉన్నాయి:",
+  duplicateHead:"కుటుంబ పెద్ద", duplicateMembers:"కుటుంబ సభ్యులు", duplicateTravelMode:"ప్రయాణ విధానం",
+  duplicateReturn:"తిరుగు టికెట్", duplicateNotDecided:"ఇంకా నిర్ణయించలేదు", duplicateRegisteredOn:"నమోదు తేదీ",
+  duplicateConfirm:"అవును, ఇది సరైనది", duplicateUpdate:"వివరాలు నవీకరించండి",
+  familyTitle:"మీతో పాటు ఎవరు ప్రయాణిస్తున్నారు?",
+  familySub:"రైలు ప్రయాణంలో చేరే ప్రతి కుటుంబ సభ్యుడిని జోడించండి. మీకు కావలసినంత మంది జోడించవచ్చు.",
+  addMemberBtn:"+ కుటుంబ సభ్యుడిని జోడించండి", saveContinueBtn:"సేవ్ చేసి కొనసాగించండి",
+  headOfFamily:"కుటుంబ పెద్ద", familyMemberN:"కుటుంబ సభ్యుడు {n}", removeBtn:"తొలగించండి",
+  fullNameLabel:"పూర్తి పేరు", relationshipLabel:"సంబంధం", dobLabel:"పుట్టిన తేదీ", genderLabel:"లింగం",
+  genderSelectOpt:"ఎంచుకోండి", genderMale:"పురుషుడు", genderFemale:"స్త్రీ", genderOther:"ఇతర",
+  phoneOptionalLabel:"ఫోన్ (ఐచ్ఛికం)", govIdLabel:"ప్రభుత్వ గుర్తింపు (ఐచ్ఛికం)", govIdHint:"రైలు టికెట్ బుకింగ్ కోసం మాత్రమే · గోప్యత కోసం మాస్క్ చేయబడింది",
+  berthLabel:"బెర్త్ ప్రాధాన్యత", berthNone:"ప్రాధాన్యత లేదు", berthLower:"దిగువ", berthMiddle:"మధ్య", berthUpper:"ఎగువ", berthSideLower:"సైడ్ లోయర్",
+  medicalLabel:"వైద్య అవసరాలు", medicalPlaceholder:"ఐచ్ఛికం",
+  returnTitle:"మీ తిరుగు టికెట్లను కూడా మేము బుక్ చేయాలా?",
+  returnYes:"అవును, దయచేసి", returnNo:"లేదు, ఏర్పాటు ఉంది", returnLater:"తర్వాత నిర్ణయిస్తాము",
+  guideHeroTitle:"మీరు సిద్ధంగా ఉన్నారు", guideHeroSub:"మీతో కలిసి జరుపుకోవడానికి మేము ఎదురుచూస్తున్నాము. రాబోయే రోజులకు కావలసినదంతా ఇక్కడ ఉంది.",
+  summaryTitle:"మీ RSVP, ఒక్క చూపులో",
+  summaryAttendingAs:"హాజరవుతున్నది", summaryGroomSide:"విశాల్ తరపు · హైదరాబాద్", summaryBrideSide:"అంకిత తరపు · లక్నో",
+  summaryRsvp:"RSVP", summaryJoining:"హాజరవుతున్నారు", summaryNotAttending:"హాజరుకావడం లేదు",
+  summaryTravelMode:"ప్రయాణ విధానం", summaryFamilyMembers:"కుటుంబ సభ్యులు", summaryNoneAdded:"ఇంకా ఎవరూ జోడించలేదు",
+  summaryArrival:"రాక", summaryDeparture:"బయలుదేరడం", summaryGuests:"ప్రయాణించే అతిథులు",
+  summaryAccommodation:"వసతి", summaryRequested:"అభ్యర్థించారు", summaryNotNeeded:"అవసరం లేదు",
+  summaryReturnTickets:"తిరుగు టికెట్లు", summaryDecidingLater:"తర్వాత నిర్ణయిస్తాము", summaryPhone:"నమోదైన ఫోన్",
+  groomJourneyTitle:"వరుడి ప్రయాణం — హైదరాబాద్ ✦ లక్నో", brideJourneyTitle:"వధువు ప్రయాణం — హైదరాబాద్ వేడుకలు",
+  evKotnam:"కొట్నం ఆచారం", evJourneyLucknow:"లక్నోకు ప్రయాణం", evArrival:"రాక", evHaldi:"పసుపు",
+  evMehendi:"మెహందీ · నిశ్చితార్థం · సంగీత్", evWedding:"వివాహం", evReturnHyd:"హైదరాబాద్‌కు తిరుగు ప్రయాణం",
+  evRest:"విశ్రాంతి రోజు", evSouthIndian:"దక్షిణ భారత శైలి వివాహం", evReception:"రిసెప్షన్", evKatha:"సత్యనారాయణ కథ",
+  wearTitle:"ఏమి ధరించాలి", wearHaldi:"పసుపు: పసుపు రంగు (+ కళ్లద్దాలు!)", wearMehendi:"మెహందీ: ఆకుపచ్చ", wearSangeet:"సంగీత్: వెస్ట్రన్ దుస్తులు",
+  weatherTitle:"వాతావరణ సమాచారం",
+  weatherLucknowNote:"చల్లని శరదృతువు సాయంత్రాలు — తేలికపాటి సంప్రదాయ దుస్తులు లేదా అందమైన శాలువా తీసుకురండి",
+  weatherHyderabadNote:"ఆహ్లాదకరమైన ఉష్ణమండల వెచ్చదనం — సంప్రదాయ పట్టు వస్త్రాలకు సరైనది",
+  syncCalendarBtn:"వివాహాన్ని మీ డివైస్ క్యాలెండర్‌కు జోడించండి", downloadPdfBtn:"ఈ పేజీని డౌన్‌లోడ్ చేయండి (PDF)",
+  waLabelGroom:"విశాల్ వైపు వారికి WhatsAppలో సందేశం పంపండి", waLabelBride:"అంకిత వైపు వారికి WhatsAppలో సందేశం పంపండి",
+  toastInvalidPhone:"దయచేసి సరైన 10 అంకెల ఫోన్ నంబర్ నమోదు చేయండి",
+  toastAddHeadName:"దయచేసి కనీసం కుటుంబ పెద్ద పేరు జోడించండి",
+  toastSaveError:"సేవ్ చేయలేకపోయాము — దయచేసి మీ కనెక్షన్ తనిఖీ చేయండి",
+  toastCalendarOpening:"మీ క్యాలెండర్ ఫైల్ తెరుస్తున్నాము — అడిగినప్పుడు \"Add\" నొక్కండి",
+  toastCalendarError:"ఈ పరికరంలో క్యాలెండర్ ఫైల్ తెరవలేకపోయాము — దయచేసి మీ ఫోన్ బ్రౌజర్ నుండి మళ్లీ ప్రయత్నించండి",
+  toastPrintOpening:"ప్రింట్ డైలాగ్ తెరుస్తున్నాము — \"Save as PDF\" ఎంచుకోండి",
+  toastIncorrectPin:"తప్పు పిన్"
+}
+};
+let currentLang = 'en';
+function t(key, vars){
+  let str = (i18n[currentLang] && i18n[currentLang][key]) || i18n.en[key] || key;
+  if(vars){ Object.keys(vars).forEach(k=>{ str = str.replace('{'+k+'}', vars[k]); }); }
+  return str;
+}
+function applyStaticTranslations(){
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    el.textContent = t(el.getAttribute('data-i18n'));
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{
+    el.placeholder = t(el.getAttribute('data-i18n-placeholder'));
+  });
+}
+function setLang(l){
+  currentLang = l;
+  applyStaticTranslations();
+  goTo('screen-opening', true);
+}
+
+/* ============ STATE + NAV HISTORY ============ */
+let session = { side:null, rsvp:null, phone:null, travelMode:null, members:[], flightDetails:null, returnTicket:null };
+let screenHistory = ['screen-language'];
+
+function navTitleFor(id){
+  const map = {
+    'screen-select':'whichSideTag', 'screen-rsvp':'summaryRsvp', 'screen-travel':'travelEyebrow',
+    'screen-flight-details':'travelDetailsTitle', 'screen-phone-check':'findFamilyTitle',
+    'screen-duplicate':'duplicateTitle', 'screen-family':'familyTitle', 'screen-return':'returnTitle',
+    'screen-guide':'guideHeroTitle'
+  };
+  return map[id] ? t(map[id]) : '';
+}
+
+function goTo(id, pushHistory){
+  if(pushHistory){ screenHistory.push(id); }
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+  const nav = document.getElementById('nav');
+  if(id==='screen-language' || id==='screen-opening'){ nav.classList.remove('show'); }
+  else{ nav.classList.add('show'); document.getElementById('nav-title').textContent = navTitleFor(id); }
+}
+function goBack(){
+  if(screenHistory.length>1){ screenHistory.pop(); const prev = screenHistory[screenHistory.length-1]; goTo(prev,false); }
+}
+function goHome(){ screenHistory=['screen-language','screen-opening','screen-select']; goTo('screen-select',false); }
+
+const familyBySide = { groom:'Akshintala', bride:'Baghel' };
+const whatsappBySide = { groom:'917842500005', bride:'919454244328' };
+
+function selectSide(side){
+  session.side = side;
+  document.getElementById('card-groom').classList.toggle('picked', side==='groom');
+  document.getElementById('card-bride').classList.toggle('picked', side==='bride');
+  document.getElementById('card-groom').classList.toggle('dim', side!=='groom');
+  document.getElementById('card-bride').classList.toggle('dim', side!=='bride');
+  const yesBtn = document.getElementById('rsvp-yes-btn');
+  if(side==='groom'){
+    document.getElementById('rsvp-eyebrow').textContent = t('rsvpGroomEyebrow');
+    document.getElementById('rsvp-title').textContent = t('rsvpGroomTitle');
+    yesBtn.classList.remove('bride');
+  } else {
+    document.getElementById('rsvp-eyebrow').textContent = t('rsvpBrideEyebrow');
+    document.getElementById('rsvp-title').textContent = t('rsvpBrideTitle');
+    yesBtn.classList.add('bride');
+  }
+  const family = familyBySide[side];
+  document.getElementById('train-btn').textContent = '🚆 ' + t('modeTrainFamily', {family});
+  document.getElementById('phone-check-family-line').textContent = t('trainArrangedFamily', {family});
+  setTimeout(()=>goTo('screen-rsvp', true), 380);
+}
+
+function handleRsvp(yes){
+  session.rsvp = yes;
+  if(!yes){ goTo('screen-declined', true); return; }
+  updateTravelProgress(1);
+  goTo('screen-travel', true);
+}
+
+function updateTravelProgress(step){
+  const labels = [t('travelEyebrow'), t('travelDetailsTitle').split(' ')[0], t('summaryReturnTickets')];
+  const el = document.getElementById('progress-travel');
+  el.innerHTML = labels.map((l,i)=>{
+    const n=i+1;
+    const cls = n<step?'done':(n===step?'active':'');
+    return `<div class="pstep ${cls}"><div class="pdot">${n<step?'✓':n}</div><div class="plabel">${l}</div></div>`;
+  }).join('');
+}
+
+function chooseTravel(mode){
+  session.travelMode = mode;
+  updateTravelProgress(2);
+  if(mode==='train'){
+    goTo('screen-phone-check', true);
+  } else {
+    const introKeys = { flight:'travelDetailsIntroFlight', car:'travelDetailsIntroCar', bus:'travelDetailsIntroBus' };
+    document.getElementById('fd-intro-line').textContent = t(introKeys[mode] || 'travelDetailsIntroDefault');
+    goTo('screen-flight-details', true);
+  }
+}
+
+async function submitFlightDetails(){
+  const phone = document.getElementById('fd-phone').value.trim();
+  if(!/^\d{10}$/.test(phone)){ showToast(t('toastInvalidPhone')); return; }
+  session.phone = phone;
+  session.flightDetails = {
+    arrival: document.getElementById('fd-arrival').value,
+    departure: document.getElementById('fd-departure').value,
+    count: document.getElementById('fd-count').value,
+    accommodation: document.getElementById('fd-accom').value
+  };
+  await saveRecord();
+  updateTravelProgress(3);
+  goTo('screen-return', true);
+}
+
+/* ============ DUPLICATE CHECK ============ */
+async function checkPhone(){
+  const phone = document.getElementById('phone-check-input').value.trim();
+  if(!/^\d{10}$/.test(phone)){ showToast(t('toastInvalidPhone')); return; }
+  session.phone = phone;
+  try{
+    const res = await fetch('/api/check/'+phone);
+    if(res.ok){
+      const data = await res.json();
+      const rec = data.record;
+      session.members = rec.members || [];
+      session.travelMode = rec.travelMode || session.travelMode;
+      session.returnTicket = rec.returnTicket;
+      session.flightDetails = rec.flightDetails || null;
+      renderDuplicate(rec);
+      goTo('screen-duplicate', true);
+      return;
+    }
+  }catch(e){}
+  updateTravelProgress(2);
+  goTo('screen-family', true);
+}
+
+function renderDuplicate(rec){
+  const headName = rec.members?.[0]?.name;
+  document.getElementById('dup-registered-by').textContent = headName
+    ? t('duplicateRegisteredName', {name:headName})
+    : t('duplicateRegisteredDefault');
+  const box = document.getElementById('dup-details');
+  box.innerHTML = `
+    <div class="dup-row"><span>${t('duplicateHead')}</span><span>${rec.members?.[0]?.name || '—'}</span></div>
+    <div class="dup-row"><span>${t('duplicateMembers')}</span><span>${(rec.members||[]).length}</span></div>
+    <div class="dup-row"><span>${t('duplicateTravelMode')}</span><span>${rec.travelMode||'—'}</span></div>
+    <div class="dup-row"><span>${t('duplicateReturn')}</span><span>${rec.returnTicket||t('duplicateNotDecided')}</span></div>
+    <div class="dup-row"><span>${t('duplicateRegisteredOn')}</span><span>${rec.timestamp ? new Date(rec.timestamp).toLocaleDateString() : '—'}</span></div>
+  `;
+}
+
+/* ============ FAMILY MEMBERS ============ */
+function addFamilyMember(){
+  session.members.push({name:'',relation:'',dob:'',gender:'',phone:'',govId:'',berth:'',medical:''});
+  renderFamily();
+}
+function removeFamilyMember(i){ session.members.splice(i,1); renderFamily(); }
+function renderFamily(){
+  const list = document.getElementById('family-list');
+  if(session.members.length===0) addFamilyMember();
+  list.innerHTML = session.members.map((m,i)=>`
+    <div class="fam-card glass">
+      <div class="fam-card-head"><b>${i===0?t('headOfFamily'):t('familyMemberN',{n:i+1})}</b>${i>0?`<button class="remove" onclick="removeFamilyMember(${i})">${t('removeBtn')}</button>`:''}</div>
+      <div class="fam-mini-grid">
+        <div class="field full"><label>${t('fullNameLabel')}</label><input value="${m.name}" oninput="session.members[${i}].name=this.value"></div>
+        ${i>0?`<div class="field"><label>${t('relationshipLabel')}</label><input value="${m.relation}" oninput="session.members[${i}].relation=this.value"></div>`:''}
+        <div class="field"><label>${t('dobLabel')}</label><input type="date" value="${m.dob}" oninput="session.members[${i}].dob=this.value"></div>
+        <div class="field"><label>${t('genderLabel')}</label><select onchange="session.members[${i}].gender=this.value"><option value="">${t('genderSelectOpt')}</option><option>${t('genderMale')}</option><option>${t('genderFemale')}</option><option>${t('genderOther')}</option></select></div>
+        <div class="field"><label>${t('phoneOptionalLabel')}</label><input type="tel" inputmode="numeric" value="${m.phone}" oninput="session.members[${i}].phone=this.value"></div>
+        <div class="field"><label>${t('govIdLabel')}</label><input type="password" autocomplete="off" value="${m.govId}" oninput="session.members[${i}].govId=this.value"><div class="field-hint">${t('govIdHint')}</div></div>
+        <div class="field"><label>${t('berthLabel')}</label><select onchange="session.members[${i}].berth=this.value"><option value="">${t('berthNone')}</option><option>${t('berthLower')}</option><option>${t('berthMiddle')}</option><option>${t('berthUpper')}</option><option>${t('berthSideLower')}</option></select></div>
+        <div class="field"><label>${t('medicalLabel')}</label><input value="${m.medical}" oninput="session.members[${i}].medical=this.value" placeholder="${t('medicalPlaceholder')}"></div>
+      </div>
+    </div>
+  `).join('');
+}
+
+async function submitFamily(){
+  const head = session.members[0];
+  if(!head || !head.name){ showToast(t('toastAddHeadName')); return; }
+  session.travelMode = session.travelMode || 'train';
+  await saveRecord();
+  updateTravelProgress(3);
+  goTo('screen-return', true);
+}
+
+/* ============ RETURN TICKET → RING TRANSITION → GUIDE ============ */
+async function handleReturn(choice){
+  session.returnTicket = choice;
+  await saveRecord();
+  playRingTransition(()=>showGuide());
+}
+
+function playRingTransition(callback){
+  const overlay = document.getElementById('ring-transition');
+  overlay.classList.add('show');
+  setTimeout(()=>{ overlay.classList.remove('show'); callback(); }, 1250);
+}
+
+/* ============ GUIDE SUMMARY + WHATSAPP ============ */
+function renderGuideSummary(){
+  const waNum = whatsappBySide[session.side] || '917842500005';
+  document.getElementById('wa-link').href = `https://wa.me/${waNum}`;
+  document.getElementById('wa-label').textContent = session.side === 'bride' ? t('waLabelBride') : t('waLabelGroom');
+
+  const body = document.getElementById('summary-body');
+  if(!session.side){ body.innerHTML = ''; return; }
+  const memberNames = (session.members||[]).map(m=>m.name).filter(Boolean).join(', ');
+  const rows = [
+    [t('summaryAttendingAs'), session.side==='groom' ? t('summaryGroomSide') : t('summaryBrideSide')],
+    [t('summaryRsvp'), session.rsvp ? t('summaryJoining') : t('summaryNotAttending')],
+    [t('summaryTravelMode'), session.travelMode ? session.travelMode.charAt(0).toUpperCase()+session.travelMode.slice(1) : '—'],
+  ];
+  if(session.travelMode==='train'){
+    rows.push([t('summaryFamilyMembers'), memberNames || (session.members?.length ? session.members.length+' ' : t('summaryNoneAdded'))]);
+  } else if(session.flightDetails){
+    rows.push([t('summaryArrival'), session.flightDetails.arrival || '—']);
+    rows.push([t('summaryDeparture'), session.flightDetails.departure || '—']);
+    rows.push([t('summaryGuests'), session.flightDetails.count || '—']);
+    rows.push([t('summaryAccommodation'), session.flightDetails.accommodation==='yes' ? t('summaryRequested') : t('summaryNotNeeded')]);
+  }
+  if(session.returnTicket){
+    rows.push([t('summaryReturnTickets'), session.returnTicket==='yes'?t('summaryRequested'):(session.returnTicket==='no'?t('summaryNotNeeded'):t('summaryDecidingLater'))]);
+  }
+  if(session.phone){ rows.push([t('summaryPhone'), session.phone]); }
+  body.innerHTML = rows.map(r=>`<div class="summary-row"><span>${r[0]}</span><span>${r[1]}</span></div>`).join('');
+}
+
+function showGuide(){
+  renderGuideSummary();
+  goTo('screen-guide', true);
+}
+
+/* ============ BACKEND SAVE ============ */
+async function saveRecord(){
+  if(!session.phone) return;
+  const record = {
+    phone: session.phone, side: session.side, rsvp: session.rsvp,
+    travelMode: session.travelMode, members: session.members,
+    flightDetails: session.flightDetails, returnTicket: session.returnTicket
+  };
+  try{
+    const res = await fetch('/api/save', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify(record)
+    });
+    if(!res.ok) throw new Error('save failed');
+  }catch(e){ console.error('Save error', e); showToast(t('toastSaveError')); }
+}
+
+function showToast(msg){
+  const el = document.getElementById('toast');
+  el.textContent = msg; el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'), 2600);
+}
+
+/* ============ ADMIN (English only — organizer view) ============ */
+let adminPassword = null;
+
+async function openAdmin(){
+  document.getElementById('pin-input').value = '';
+  document.getElementById('pin-modal').classList.add('show');
+  setTimeout(()=>document.getElementById('pin-input').focus(), 100);
+}
+function closePinModal(){ document.getElementById('pin-modal').classList.remove('show'); }
+async function submitPin(){
+  const pin = document.getElementById('pin-input').value.trim();
+  const res = await fetch('/api/all', { headers:{'x-admin-password':pin} });
+  if(!res.ok){ showToast(t('toastIncorrectPin')); return; }
+  adminPassword = pin;
+  const data = await res.json();
+  closePinModal();
+  renderAdmin(data.records);
+  goTo('screen-admin', true);
+}
+document.addEventListener('DOMContentLoaded', ()=>{
+  const pinInput = document.getElementById('pin-input');
+  if(pinInput){ pinInput.addEventListener('keydown', (e)=>{ if(e.key==='Enter') submitPin(); }); }
+});
+function renderAdmin(records){
+  const totalGuests = records.reduce((s,r)=>s+(r.members&&r.members.length?r.members.length:(r.flightDetails?parseInt(r.flightDetails.count||1):1)),0);
+  const groomSide = records.filter(r=>r.side==='groom').length;
+  const brideSide = records.filter(r=>r.side==='bride').length;
+  const trainCount = records.filter(r=>r.travelMode==='train').length;
+  const returnYes = records.filter(r=>r.returnTicket==='yes').length;
+  document.getElementById('admin-stats').innerHTML = `
+    <div class="stat-box glass"><div class="n">${records.length}</div><div class="l">Families</div></div>
+    <div class="stat-box glass"><div class="n">${totalGuests}</div><div class="l">Guests</div></div>
+    <div class="stat-box glass"><div class="n">${groomSide}</div><div class="l">Groom Side</div></div>
+    <div class="stat-box glass"><div class="n">${brideSide}</div><div class="l">Bride Side</div></div>
+    <div class="stat-box glass"><div class="n">${trainCount}</div><div class="l">Train Travellers</div></div>
+    <div class="stat-box glass"><div class="n">${returnYes}</div><div class="l">Return Tickets</div></div>
+  `;
+  const tbody = document.querySelector('#admin-table tbody');
+  tbody.innerHTML = records.map(r=>`
+    <tr><td>${r.phone}</td><td>${r.side||'—'}</td><td>${r.rsvp?'Yes':'No'}</td><td>${r.travelMode||'—'}</td><td>${r.members&&r.members.length?r.members.length:(r.flightDetails?r.flightDetails.count:'—')}</td><td>${r.returnTicket||'—'}</td></tr>
+  `).join('');
+}
+async function exportCsv(){
+  if(!adminPassword) return;
+  const res = await fetch('/api/export.csv', { headers:{'x-admin-password':adminPassword} });
+  if(!res.ok){ showToast(t('toastIncorrectPin')); return; }
+  const blob = await res.blob();
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'wedding-rsvps.csv'; a.rel = 'noopener';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(()=>URL.revokeObjectURL(url), 15000);
+}
+
+/* ============ CALENDAR ICS ============ */
+function downloadIcs(){
+  const events = [
+    {d:'20261125',title:'Kotnam Ritual — Ankita ✦ Vishal',loc:'Hyderabad'},
+    {d:'20261129',title:'Haldi — Ankita ✦ Vishal',loc:'Lucknow'},
+    {d:'20261129',title:'Mehendi, Engagement & Sangeet — Ankita ✦ Vishal',loc:'Lucknow'},
+    {d:'20261130',title:'The Wedding — Ankita weds Vishal',loc:'Lucknow'},
+    {d:'20261204',title:'South Indian Style Marriage — Ankita ✦ Vishal',loc:'Hyderabad'},
+    {d:'20261204',title:'Reception — Ankita ✦ Vishal',loc:'Hyderabad'},
+    {d:'20261205',title:'Sathyanarayana Katha — Ankita ✦ Vishal',loc:'Hyderabad'}
+  ];
+  let ics = 'BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Ankita Vishal Wedding//EN\r\n';
+  events.forEach((e,i)=>{
+    ics += `BEGIN:VEVENT\r\nUID:${e.d}-${i}@ankitavishal\r\nDTSTAMP:${e.d}T000000Z\r\nDTSTART;VALUE=DATE:${e.d}\r\nSUMMARY:${e.title}\r\nLOCATION:${e.loc}\r\nEND:VEVENT\r\n`;
+  });
+  ics += `BEGIN:VEVENT\r\nUID:anniversary@ankitavishal\r\nDTSTAMP:20261130T000000Z\r\nDTSTART;VALUE=DATE:20261130\r\nRRULE:FREQ=YEARLY\r\nSUMMARY:Ankita x Vishal Marriage Anniversary\r\nEND:VEVENT\r\n`;
+  ics += 'END:VCALENDAR';
+  try{
+    const blob = new Blob([ics],{type:'text/calendar;charset=utf-8'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.target = '_blank'; a.rel = 'noopener';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(()=>URL.revokeObjectURL(url), 15000);
+    showToast(t('toastCalendarOpening'));
+  }catch(e){
+    console.error('Calendar sync error', e);
+    showToast(t('toastCalendarError'));
+  }
+}
+
+function downloadGuidePdf(){
+  showToast(t('toastPrintOpening'));
+  setTimeout(()=>window.print(), 300);
+}
+
+/* ============ CELEBRATION CANVAS: fireworks + confetti + ambient lanterns ============ */
+(function(){
+  const canvas = document.getElementById('particle-canvas');
+  const ctx = canvas.getContext('2d');
+  let lanterns = [], sparks = [], confetti = [], running = false, raf;
+  const isSmall = window.innerWidth < 500;
+  const confettiColors = ['#F5A623','#C86B7B','#FFD68A','#F9F9FB','#E8A9B4'];
+
+  function resize(){ canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; }
+
+  function initLanterns(){
+    lanterns = Array.from({length: isSmall ? 16 : 26}, ()=>({
+      x: Math.random()*canvas.width, y: canvas.height + Math.random()*canvas.height,
+      r: 1 + Math.random()*2.2, speed: 0.15 + Math.random()*0.35,
+      drift: (Math.random()-0.5)*0.3, hue: Math.random()>0.6 ? 'rose' : 'gold',
+      opacity: 0.3 + Math.random()*0.5
+    }));
+  }
+
+  function spawnFirework(x, y){
+    const count = isSmall ? 24 : 36;
+    for(let i=0;i<count;i++){
+      const angle = (Math.PI*2/count)*i + Math.random()*0.2;
+      const speed = 1.5 + Math.random()*2.5;
+      sparks.push({
+        x, y, vx: Math.cos(angle)*speed, vy: Math.sin(angle)*speed,
+        life: 1, decay: 0.012 + Math.random()*0.01,
+        color: Math.random()>0.5 ? '245,166,35' : '200,107,123'
+      });
+    }
+  }
+
+  function spawnConfettiBurst(){
+    const count = isSmall ? 40 : 65;
+    for(let i=0;i<count;i++){
+      confetti.push({
+        x: Math.random()*canvas.width, y: -20 - Math.random()*canvas.height*0.4,
+        w: 4+Math.random()*4, h: 7+Math.random()*5,
+        vy: 1.2+Math.random()*1.8, vx: (Math.random()-0.5)*1.2,
+        rot: Math.random()*360, rotSpeed: (Math.random()-0.5)*8,
+        color: confettiColors[Math.floor(Math.random()*confettiColors.length)],
+        life: 1
+      });
+    }
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    lanterns.forEach(p=>{
+      p.y -= p.speed; p.x += p.drift;
+      if(p.y < -10){ p.y = canvas.height + 10; p.x = Math.random()*canvas.width; }
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+      ctx.fillStyle = p.hue==='gold' ? `rgba(245,166,35,${p.opacity})` : `rgba(200,107,123,${p.opacity})`;
+      ctx.fill();
+    });
+    sparks.forEach(s=>{
+      s.x += s.vx; s.y += s.vy; s.vy += 0.035; s.life -= s.decay;
+      ctx.beginPath(); ctx.arc(s.x, s.y, 2, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(${s.color},${Math.max(s.life,0)})`;
+      ctx.fill();
+    });
+    sparks = sparks.filter(s=>s.life>0);
+    confetti.forEach(c=>{
+      c.y += c.vy; c.x += c.vx; c.rot += c.rotSpeed;
+      if(c.y > canvas.height*0.85) c.life -= 0.02;
+      ctx.save();
+      ctx.translate(c.x, c.y); ctx.rotate(c.rot*Math.PI/180);
+      ctx.globalAlpha = Math.max(c.life,0);
+      ctx.fillStyle = c.color;
+      ctx.fillRect(-c.w/2, -c.h/2, c.w, c.h);
+      ctx.restore();
+    });
+    confetti = confetti.filter(c=>c.life>0);
+    if(running) raf = requestAnimationFrame(draw);
+  }
+
+  function start(){
+    if(running) return;
+    running = true; sparks = []; confetti = [];
+    resize(); initLanterns();
+    spawnConfettiBurst();
+    setTimeout(()=>spawnFirework(canvas.width*0.28, canvas.height*0.4), 80);
+    setTimeout(()=>spawnFirework(canvas.width*0.72, canvas.height*0.32), 380);
+    setTimeout(()=>spawnFirework(canvas.width*0.5, canvas.height*0.5), 680);
+    draw();
+  }
+  function stop(){ running = false; if(raf) cancelAnimationFrame(raf); }
+
+  window.addEventListener('resize', ()=>{ if(running) resize(); });
+  const observer = new MutationObserver(()=>{
+    const active = document.getElementById('screen-opening').classList.contains('active');
+    if(active) start(); else stop();
+  });
+  observer.observe(document.getElementById('screen-opening'), {attributes:true, attributeFilter:['class']});
+})();
+</script>
+</body>
+</html>
