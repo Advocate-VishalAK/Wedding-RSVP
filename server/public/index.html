@@ -215,11 +215,37 @@
   .summary-row span:last-child{ font-weight:600; text-align:right; }
 
   #screen-admin{ text-align:left; align-items:stretch; }
-  .admin-wrap{ max-width:760px; margin:0 auto; width:100%; }
+  .admin-wrap{ max-width:820px; margin:0 auto; width:100%; }
   .stat-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:12px; margin-bottom:24px; }
   .stat-box{ border-radius:var(--radius-md); padding:16px; }
   .stat-box .n{ font-family:'Playfair Display',serif; font-size:26px; color:var(--groom-soft); }
   .stat-box .l{ font-size:10px; text-transform:uppercase; letter-spacing:.06em; opacity:.7; font-family:'IBM Plex Mono',monospace; }
+
+  .admin-sides{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:24px; }
+  @media (max-width:640px){ .admin-sides{ grid-template-columns:1fr; } }
+  .admin-side-panel{ border-radius:var(--radius-lg); padding:20px; }
+  .admin-side-panel.groom{ background:linear-gradient(160deg, rgba(245,166,35,0.14), rgba(245,166,35,0.03)); border:1px solid var(--glass-border-gold); }
+  .admin-side-panel.bride{ background:linear-gradient(160deg, rgba(200,107,123,0.14), rgba(200,107,123,0.03)); border:1px solid var(--glass-border-rose); }
+  .admin-side-panel h3{ font-family:'Playfair Display',serif; font-size:18px; margin:0 0 14px; }
+  .admin-side-panel.groom h3{ color:var(--groom-soft); }
+  .admin-side-panel.bride h3{ color:var(--bride-soft); }
+  .admin-mini-stats{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px; }
+  .admin-mini-stat{ background:rgba(249,249,251,0.06); border-radius:12px; padding:10px 12px; }
+  .admin-mini-stat .n{ font-family:'Playfair Display',serif; font-size:20px; }
+  .admin-mini-stat .l{ font-size:9.5px; text-transform:uppercase; letter-spacing:.05em; opacity:.65; font-family:'IBM Plex Mono',monospace; margin-top:2px; }
+  .admin-chip-row{ display:flex; flex-wrap:wrap; gap:6px; }
+  .admin-chip{ font-size:10.5px; padding:5px 10px; border-radius:999px; background:rgba(249,249,251,0.08); font-family:'IBM Plex Mono',monospace; }
+
+  .admin-filter{ display:inline-flex; gap:4px; background:rgba(249,249,251,0.05); border-radius:999px; padding:4px; }
+  .filter-btn{ border:none; background:transparent; color:var(--silk-dim); padding:8px 16px; border-radius:999px; font-size:12.5px; font-weight:600; cursor:pointer; font-family:'Inter',sans-serif; transition:background .2s ease,color .2s ease; }
+  .filter-btn.active{ background:var(--groom); color:var(--base); }
+  .filter-btn:hover:not(.active){ color:var(--silk); }
+
+  #admin-table tr.side-groom td:first-child{ border-left:3px solid var(--groom); }
+  #admin-table tr.side-bride td:first-child{ border-left:3px solid var(--bride); }
+  .side-pill{ display:inline-block; font-size:10.5px; font-weight:700; padding:3px 9px; border-radius:999px; text-transform:capitalize; }
+  .side-pill.groom{ background:rgba(245,166,35,0.18); color:var(--groom-soft); }
+  .side-pill.bride{ background:rgba(200,107,123,0.18); color:var(--bride-soft); }
   table{ width:100%; border-collapse:collapse; border-radius:12px; overflow:hidden; font-size:12.5px; }
   th{ text-align:left; padding:10px 12px; background:rgba(249,249,251,0.06); font-family:'IBM Plex Mono',monospace; font-size:10px; text-transform:uppercase; color:var(--silk-faint); }
   td{ padding:10px 12px; border-top:1px solid rgba(249,249,251,0.08); }
@@ -534,7 +560,14 @@
   <div class="admin-wrap">
     <h1 class="title">Wedding Control Center</h1>
     <div class="stat-grid" id="admin-stats"></div>
-    <div style="display:flex;gap:10px;margin-bottom:16px">
+    <div class="admin-sides" id="admin-sides"></div>
+    <div style="display:flex;gap:10px;margin-bottom:16px;align-items:center;flex-wrap:wrap">
+      <div class="admin-filter" id="admin-filter">
+        <button class="filter-btn active" data-filter="all" onclick="setAdminFilter('all')">All</button>
+        <button class="filter-btn" data-filter="groom" onclick="setAdminFilter('groom')">Groom's Side</button>
+        <button class="filter-btn" data-filter="bride" onclick="setAdminFilter('bride')">Bride's Side</button>
+      </div>
+      <div style="flex:1"></div>
       <button class="btn btn-secondary" style="width:auto" onclick="exportCsv()">Export CSV</button>
       <button class="btn btn-ghost" style="width:auto" onclick="goTo('screen-language', true)">← Back to guest view</button>
     </div>
@@ -1219,24 +1252,73 @@ document.addEventListener('DOMContentLoaded', ()=>{
   const pinInput = document.getElementById('pin-input');
   if(pinInput){ pinInput.addEventListener('keydown', (e)=>{ if(e.key==='Enter') submitPin(); }); }
 });
+let adminRecords = [];
+let adminFilter = 'all';
+
+function guestCount(r){
+  const named = r.members ? r.members.length : 0;
+  const declared = (r.travelMode !== 'train' && r.flightDetails && r.flightDetails.count) ? (parseInt(r.flightDetails.count) || 0) : 0;
+  return Math.max(named, declared, 1);
+}
+
+function sideStatsPanel(side, records){
+  const sideRecords = records.filter(r=>r.side===side);
+  const guests = sideRecords.reduce((s,r)=>s+guestCount(r),0);
+  const returnYes = sideRecords.filter(r=>r.returnTicket==='yes').length;
+  const modeCounts = { train:0, flight:0, car:0, bus:0 };
+  sideRecords.forEach(r=>{ if(modeCounts[r.travelMode]!==undefined) modeCounts[r.travelMode]++; });
+  const label = side==='groom' ? "Vishal's Side · Hyderabad" : "Ankita's Side · Lucknow";
+  const chips = Object.entries(modeCounts).filter(([,n])=>n>0).map(([mode,n])=>`<span class="admin-chip">${mode} · ${n}</span>`).join('') || `<span class="admin-chip">No registrations yet</span>`;
+  return `
+    <div class="admin-side-panel ${side}">
+      <h3>${label}</h3>
+      <div class="admin-mini-stats">
+        <div class="admin-mini-stat"><div class="n">${sideRecords.length}</div><div class="l">Families</div></div>
+        <div class="admin-mini-stat"><div class="n">${guests}</div><div class="l">Guests</div></div>
+        <div class="admin-mini-stat"><div class="n">${returnYes}</div><div class="l">Return tickets</div></div>
+        <div class="admin-mini-stat"><div class="n">${sideRecords.length ? Math.round(guests/sideRecords.length*10)/10 : 0}</div><div class="l">Avg. per family</div></div>
+      </div>
+      <div class="admin-chip-row">${chips}</div>
+    </div>
+  `;
+}
+
+function renderAdminTable(){
+  const filtered = adminFilter==='all' ? adminRecords : adminRecords.filter(r=>r.side===adminFilter);
+  const tbody = document.querySelector('#admin-table tbody');
+  tbody.innerHTML = filtered.map(r=>`
+    <tr class="side-${r.side||''}">
+      <td>${r.phone}</td>
+      <td><span class="side-pill ${r.side||''}">${r.side||'—'}</span></td>
+      <td>${r.rsvp?'Yes':'No'}</td>
+      <td>${r.travelMode||'—'}</td>
+      <td>${guestCount(r)}</td>
+      <td>${r.returnTicket||'—'}</td>
+    </tr>
+  `).join('');
+}
+
+function setAdminFilter(filter){
+  adminFilter = filter;
+  document.querySelectorAll('#admin-filter .filter-btn').forEach(btn=>{
+    btn.classList.toggle('active', btn.dataset.filter===filter);
+  });
+  renderAdminTable();
+}
+
 function renderAdmin(records){
-  const totalGuests = records.reduce((s,r)=>s+(r.members&&r.members.length?r.members.length:(r.flightDetails?parseInt(r.flightDetails.count||1):1)),0);
-  const groomSide = records.filter(r=>r.side==='groom').length;
-  const brideSide = records.filter(r=>r.side==='bride').length;
-  const trainCount = records.filter(r=>r.travelMode==='train').length;
+  adminRecords = records;
+  adminFilter = 'all';
+  document.querySelectorAll('#admin-filter .filter-btn').forEach(btn=>btn.classList.toggle('active', btn.dataset.filter==='all'));
+  const totalGuests = records.reduce((s,r)=>s+guestCount(r),0);
   const returnYes = records.filter(r=>r.returnTicket==='yes').length;
   document.getElementById('admin-stats').innerHTML = `
     <div class="stat-box glass"><div class="n">${records.length}</div><div class="l">Families</div></div>
     <div class="stat-box glass"><div class="n">${totalGuests}</div><div class="l">Guests</div></div>
-    <div class="stat-box glass"><div class="n">${groomSide}</div><div class="l">Groom Side</div></div>
-    <div class="stat-box glass"><div class="n">${brideSide}</div><div class="l">Bride Side</div></div>
-    <div class="stat-box glass"><div class="n">${trainCount}</div><div class="l">Train Travellers</div></div>
     <div class="stat-box glass"><div class="n">${returnYes}</div><div class="l">Return Tickets</div></div>
   `;
-  const tbody = document.querySelector('#admin-table tbody');
-  tbody.innerHTML = records.map(r=>`
-    <tr><td>${r.phone}</td><td>${r.side||'—'}</td><td>${r.rsvp?'Yes':'No'}</td><td>${r.travelMode||'—'}</td><td>${r.members&&r.members.length?r.members.length:(r.flightDetails?r.flightDetails.count:'—')}</td><td>${r.returnTicket||'—'}</td></tr>
-  `).join('');
+  document.getElementById('admin-sides').innerHTML = sideStatsPanel('groom', records) + sideStatsPanel('bride', records);
+  renderAdminTable();
 }
 async function exportCsv(){
   if(!adminPassword) return;
