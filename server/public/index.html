@@ -634,7 +634,7 @@ en:{
   summaryTravelMode:"Travel mode", summaryFamilyMembers:"Family members", summaryNoneAdded:"None added yet",
   summaryArrival:"Arrival", summaryDeparture:"Departure", summaryGuests:"Guests travelling",
   summaryAccommodation:"Accommodation", summaryRequested:"Requested", summaryNotNeeded:"Not needed",
-  summaryReturnTickets:"Return tickets", summaryDecidingLater:"Deciding later", summaryPhone:"Registered phone",
+  summaryReturnTickets:"Return tickets", summaryReturnRoute:"Return journey", summaryDecidingLater:"Deciding later", summaryPhone:"Registered phone",
   groomJourneyTitle:"Groom's Journey — Hyderabad ✦ Lucknow", brideJourneyTitle:"Bride's Journey — Hyderabad Celebrations",
   evKotnam:"Kotnam Ritual", evJourneyLucknow:"Journey to Lucknow", evArrival:"Arrival", evHaldi:"Haldi",
   evMehendi:"Mehendi · Engagement · Sangeet", evWedding:"The Wedding", evReturnHyd:"Return to Hyderabad",
@@ -705,7 +705,7 @@ hi:{
   summaryTravelMode:"यात्रा का तरीका", summaryFamilyMembers:"परिवार के सदस्य", summaryNoneAdded:"अभी तक कोई नहीं जोड़ा गया",
   summaryArrival:"आगमन", summaryDeparture:"प्रस्थान", summaryGuests:"यात्रा करने वाले मेहमान",
   summaryAccommodation:"ठहरने की व्यवस्था", summaryRequested:"अनुरोध किया गया", summaryNotNeeded:"आवश्यकता नहीं",
-  summaryReturnTickets:"वापसी टिकट", summaryDecidingLater:"बाद में तय करेंगे", summaryPhone:"पंजीकृत फ़ोन नंबर",
+  summaryReturnTickets:"वापसी टिकट", summaryReturnRoute:"वापसी यात्रा", summaryDecidingLater:"बाद में तय करेंगे", summaryPhone:"पंजीकृत फ़ोन नंबर",
   groomJourneyTitle:"वर की यात्रा — हैदराबाद ✦ लखनऊ", brideJourneyTitle:"वधू की यात्रा — हैदराबाद समारोह",
   evKotnam:"कोटनम अनुष्ठान", evJourneyLucknow:"लखनऊ की यात्रा", evArrival:"आगमन", evHaldi:"हल्दी",
   evMehendi:"मेहंदी · सगाई · संगीत", evWedding:"विवाह समारोह", evReturnHyd:"हैदराबाद वापसी",
@@ -776,7 +776,7 @@ te:{
   summaryTravelMode:"ప్రయాణ విధానం", summaryFamilyMembers:"కుటుంబ సభ్యులు", summaryNoneAdded:"ఇంకా ఎవరూ జోడించలేదు",
   summaryArrival:"రాక", summaryDeparture:"బయలుదేరడం", summaryGuests:"ప్రయాణించే అతిథులు",
   summaryAccommodation:"వసతి", summaryRequested:"అభ్యర్థించారు", summaryNotNeeded:"అవసరం లేదు",
-  summaryReturnTickets:"తిరుగు టికెట్లు", summaryDecidingLater:"తర్వాత నిర్ణయిస్తాము", summaryPhone:"నమోదైన ఫోన్",
+  summaryReturnTickets:"తిరుగు టికెట్లు", summaryReturnRoute:"తిరుగు ప్రయాణం", summaryDecidingLater:"తర్వాత నిర్ణయిస్తాము", summaryPhone:"నమోదైన ఫోన్",
   groomJourneyTitle:"వరుడి ప్రయాణం — హైదరాబాద్ ✦ లక్నో", brideJourneyTitle:"వధువు ప్రయాణం — హైదరాబాద్ వేడుకలు",
   evKotnam:"కొట్నం ఆచారం", evJourneyLucknow:"లక్నోకు ప్రయాణం", evArrival:"రాక", evHaldi:"పసుపు",
   evMehendi:"మెహందీ · నిశ్చితార్థం · సంగీత్", evWedding:"వివాహం", evReturnHyd:"హైదరాబాద్‌కు తిరుగు ప్రయాణం",
@@ -889,6 +889,14 @@ function goHome(){ screenHistory=['screen-language','screen-opening','screen-sel
 const familyBySide = { groom:'Akshintala', bride:'Baghel' };
 const whatsappBySide = { groom:'917842500005', bride:'919454244328' };
 
+function trainRoute(side){
+  const hyd = t('hyderabadLabel');
+  const luc = t('lucknowLabel');
+  return side==='bride'
+    ? { onward: luc+' → '+hyd, return: hyd+' → '+luc }
+    : { onward: hyd+' → '+luc, return: luc+' → '+hyd };
+}
+
 function applySideTexts(){
   const side = session.side;
   if(!side) return;
@@ -907,8 +915,9 @@ function applySideTexts(){
     yesBtn.classList.add('bride');
   }
   const family = familyBySide[side];
-  document.getElementById('train-btn').textContent = '🚆 ' + t('modeTrainFamily', {family});
-  document.getElementById('phone-check-family-line').textContent = t('trainArrangedFamily', {family});
+  const route = trainRoute(side).onward;
+  document.getElementById('train-btn').textContent = '🚆 ' + t('modeTrainFamily', {family}) + ' · ' + route;
+  document.getElementById('phone-check-family-line').textContent = t('trainArrangedFamily', {family}) + ' ' + route + '.';
 }
 
 function selectSide(side){
@@ -1036,7 +1045,7 @@ function renderDuplicate(rec){
   box.innerHTML = `
     <div class="dup-row"><span>${t('duplicateHead')}</span><span>${rec.members?.[0]?.name || '—'}</span></div>
     <div class="dup-row"><span>${t('duplicateMembers')}</span><span>${(rec.members||[]).length}</span></div>
-    <div class="dup-row"><span>${t('duplicateTravelMode')}</span><span>${rec.travelMode||'—'}</span></div>
+    <div class="dup-row"><span>${t('duplicateTravelMode')}</span><span>${rec.travelMode==='train' ? rec.travelMode+' · '+trainRoute(rec.side).onward : (rec.travelMode||'—')}</span></div>
     <div class="dup-row"><span>${t('duplicateReturn')}</span><span>${rec.returnTicket||t('duplicateNotDecided')}</span></div>
     <div class="dup-row"><span>${t('duplicateRegisteredOn')}</span><span>${rec.timestamp ? new Date(rec.timestamp).toLocaleDateString() : '—'}</span></div>
   `;
@@ -1116,10 +1125,11 @@ function renderGuideSummary(){
   const body = document.getElementById('summary-body');
   if(!session.side){ body.innerHTML = ''; return; }
   const memberNames = (session.members||[]).map(m=>m.name).filter(Boolean).join(', ');
+  const travelModeLabel = session.travelMode ? session.travelMode.charAt(0).toUpperCase()+session.travelMode.slice(1) : '—';
   const rows = [
     [t('summaryAttendingAs'), session.side==='groom' ? t('summaryGroomSide') : t('summaryBrideSide')],
     [t('summaryRsvp'), session.rsvp ? t('summaryJoining') : t('summaryNotAttending')],
-    [t('summaryTravelMode'), session.travelMode ? session.travelMode.charAt(0).toUpperCase()+session.travelMode.slice(1) : '—'],
+    [t('summaryTravelMode'), session.travelMode==='train' ? travelModeLabel+' · '+trainRoute(session.side).onward : travelModeLabel],
   ];
   if(session.travelMode==='train'){
     rows.push([t('summaryFamilyMembers'), memberNames || (session.members?.length ? session.members.length+' ' : t('summaryNoneAdded'))]);
@@ -1130,6 +1140,9 @@ function renderGuideSummary(){
   }
   if(session.returnTicket){
     rows.push([t('summaryReturnTickets'), session.returnTicket==='yes'?t('summaryRequested'):(session.returnTicket==='no'?t('summaryNotNeeded'):t('summaryDecidingLater'))]);
+    if(session.travelMode==='train' && session.returnTicket==='yes'){
+      rows.push([t('summaryReturnRoute'), trainRoute(session.side).return]);
+    }
   }
   if(session.phone){ rows.push([t('summaryPhone'), session.phone]); }
   body.innerHTML = rows.map(r=>`<div class="summary-row"><span>${r[0]}</span><span>${r[1]}</span></div>`).join('');
