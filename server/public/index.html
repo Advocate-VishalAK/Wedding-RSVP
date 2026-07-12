@@ -46,42 +46,28 @@
 
   #nav{
     position:fixed; top:16px; left:16px; right:16px; z-index:200;
-    display:none; align-items:center; justify-content:space-between;
+    display:none; align-items:center; justify-content:space-between; gap:6px;
     background:var(--glass-bg); backdrop-filter:blur(16px) saturate(180%); -webkit-backdrop-filter:blur(16px) saturate(180%);
     border:1px solid rgba(249,249,251,0.14); border-radius:var(--radius-pill);
     padding:8px; max-width:420px; margin:0 auto;
   }
   #nav.show{ display:flex; }
+  .nav-group{ display:flex; align-items:center; gap:6px; flex:1; }
+  .nav-group.nav-group-end{ justify-content:flex-end; }
   .nav-btn{
-    width:48px; height:48px; border-radius:50%; border:none; cursor:pointer;
+    width:42px; height:42px; border-radius:50%; border:none; cursor:pointer; flex-shrink:0;
     background:rgba(249,249,251,0.08); color:var(--silk); display:flex; align-items:center; justify-content:center;
     transition:background .2s ease, transform .2s ease;
   }
   .nav-btn:active{ transform:scale(0.92); }
   .nav-btn:hover{ background:rgba(245,166,35,0.22); }
-  .nav-title{ font-size:12px; font-weight:600; letter-spacing:.04em; color:var(--silk-dim); }
+  .nav-title{ font-size:11px; font-weight:600; letter-spacing:.03em; color:var(--silk-dim); text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 
-  #music-toggle{
-    position:fixed; bottom:calc(20px + env(safe-area-inset-bottom)); right:20px; z-index:300;
-    width:46px; height:46px; border-radius:50%; border:1px solid rgba(249,249,251,0.18); cursor:pointer;
-    background:var(--glass-bg); backdrop-filter:blur(16px) saturate(180%); -webkit-backdrop-filter:blur(16px) saturate(180%);
-    color:var(--silk); display:flex; align-items:center; justify-content:center;
-    transition:background .2s ease, transform .2s ease;
-  }
-  #music-toggle:active{ transform:scale(0.92); }
-  #music-toggle:hover{ border-color:var(--groom-soft); }
-  @media print{ #music-toggle, #lang-toggle{ display:none !important; } }
-
+  #music-toggle{ min-width:42px; }
   #lang-toggle{
-    position:fixed; bottom:calc(20px + env(safe-area-inset-bottom)); left:20px; z-index:300;
-    min-width:46px; height:46px; padding:0 14px; border-radius:999px; border:1px solid rgba(249,249,251,0.18); cursor:pointer;
-    background:var(--glass-bg); backdrop-filter:blur(16px) saturate(180%); -webkit-backdrop-filter:blur(16px) saturate(180%);
-    color:var(--silk); font-family:'IBM Plex Mono',monospace; font-size:12px; font-weight:600; letter-spacing:.04em;
-    display:flex; align-items:center; justify-content:center;
-    transition:background .2s ease, transform .2s ease;
+    min-width:42px; padding:0 10px; border-radius:999px;
+    font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:600; letter-spacing:.04em;
   }
-  #lang-toggle:active{ transform:scale(0.92); }
-  #lang-toggle:hover{ border-color:var(--groom-soft); }
 
   .eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--groom-soft); margin-bottom:16px; }
   h1.title{ font-family:'Playfair Display','Noto Sans Devanagari','Noto Sans Telugu',serif; font-weight:600; font-size:clamp(24px,6vw,36px); margin:0 0 14px; line-height:1.3; }
@@ -288,13 +274,22 @@
 <body>
 
 <div id="nav">
-  <button class="nav-btn" onclick="goBack()" aria-label="Back">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
-  </button>
+  <div class="nav-group">
+    <button class="nav-btn" onclick="goBack()" aria-label="Back">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <button id="lang-toggle" class="nav-btn" type="button" onclick="cycleLang()" aria-label="Change language">EN</button>
+  </div>
   <span class="nav-title" id="nav-title"></span>
-  <button class="nav-btn" onclick="goHome()" aria-label="Home">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
-  </button>
+  <div class="nav-group nav-group-end">
+    <button id="music-toggle" class="nav-btn" type="button" onclick="toggleMusic()" aria-label="Toggle background music">
+      <svg id="music-icon-on" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+      <svg id="music-icon-off" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="display:none"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/><line x1="2" y1="2" x2="22" y2="22"/></svg>
+    </button>
+    <button class="nav-btn" onclick="goHome()" aria-label="Home">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+    </button>
+  </div>
 </div>
 
 <!-- LANGUAGE -->
@@ -550,11 +545,6 @@
 </div>
 
 <audio id="bg-music" src="/audio/wedding-theme.mp3" loop preload="auto"></audio>
-<button id="music-toggle" type="button" onclick="toggleMusic()" aria-label="Toggle background music">
-  <svg id="music-icon-on" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
-  <svg id="music-icon-off" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="display:none"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/><line x1="2" y1="2" x2="22" y2="22"/></svg>
-</button>
-<button id="lang-toggle" type="button" onclick="cycleLang()" aria-label="Change language">EN</button>
 
 <div class="link-bottom">Ankita ✦ Vishal · <button type="button" onclick="openAdmin()">admin</button></div>
 <div class="toast" id="toast"></div>
