@@ -61,6 +61,17 @@
   .nav-btn:hover{ background:rgba(245,166,35,0.22); }
   .nav-title{ font-size:12px; font-weight:600; letter-spacing:.04em; color:var(--silk-dim); }
 
+  #music-toggle{
+    position:fixed; bottom:20px; right:20px; z-index:300;
+    width:46px; height:46px; border-radius:50%; border:1px solid rgba(249,249,251,0.18); cursor:pointer;
+    background:var(--glass-bg); backdrop-filter:blur(16px) saturate(180%); -webkit-backdrop-filter:blur(16px) saturate(180%);
+    color:var(--silk); display:flex; align-items:center; justify-content:center;
+    transition:background .2s ease, transform .2s ease;
+  }
+  #music-toggle:active{ transform:scale(0.92); }
+  #music-toggle:hover{ border-color:var(--groom-soft); }
+  @media print{ #music-toggle{ display:none !important; } }
+
   .eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--groom-soft); margin-bottom:16px; }
   h1.title{ font-family:'Playfair Display','Noto Sans Devanagari','Noto Sans Telugu',serif; font-weight:600; font-size:clamp(24px,6vw,36px); margin:0 0 14px; line-height:1.3; }
   p.sub{ color:var(--silk-dim); font-size:15.5px; line-height:1.75; margin:0 0 30px; }
@@ -521,6 +532,12 @@
   </div>
 </div>
 
+<audio id="bg-music" src="/audio/wedding-theme.mp3" loop preload="auto"></audio>
+<button id="music-toggle" type="button" onclick="toggleMusic()" aria-label="Toggle background music">
+  <svg id="music-icon-on" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+  <svg id="music-icon-off" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="display:none"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/><line x1="2" y1="2" x2="22" y2="22"/></svg>
+</button>
+
 <div class="link-bottom">Ankita ✦ Vishal · <button type="button" onclick="openAdmin()">admin</button></div>
 <div class="toast" id="toast"></div>
 
@@ -779,6 +796,22 @@ function setLang(l){
   currentLang = l;
   applyStaticTranslations();
   goTo('screen-opening', true);
+  startMusic();
+}
+
+/* ============ BACKGROUND MUSIC ============ */
+const bgMusic = document.getElementById('bg-music');
+bgMusic.volume = 0.22;
+let musicEnabled = true;
+function startMusic(){
+  if(!musicEnabled) return;
+  bgMusic.play().catch(()=>{});
+}
+function toggleMusic(){
+  musicEnabled = !musicEnabled;
+  document.getElementById('music-icon-on').style.display = musicEnabled ? '' : 'none';
+  document.getElementById('music-icon-off').style.display = musicEnabled ? 'none' : '';
+  if(musicEnabled){ bgMusic.play().catch(()=>{}); } else { bgMusic.pause(); }
 }
 
 /* ============ STATE + NAV HISTORY ============ */
