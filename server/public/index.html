@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Ankita ✦ Vishal — Wedding RSVP</title>
 <meta name="description" content="Join Ankita and Vishal for their wedding celebrations across Hyderabad and Lucknow — RSVP, travel, and everything you need for the days ahead.">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 29'%3E%3Cpath d='M16 28C16 28 1 18.5 1 8.8C1 3.9 4.9 1 9.2 1C12.3 1 14.9 2.8 16 5.4C17.1 2.8 19.7 1 22.8 1C27.1 1 31 3.9 31 8.8C31 18.5 16 28 16 28Z' fill='%23F5A623' stroke='%23C86B7B' stroke-width='0.8'/%3E%3C/svg%3E">
@@ -39,7 +39,7 @@
   .mono{ font-family:'IBM Plex Mono',monospace; }
   ::selection{ background:var(--groom); color:var(--base); }
 
-  .screen{ display:none; min-height:100svh; padding:88px 20px 60px; position:relative; }
+  .screen{ display:none; min-height:100svh; padding:88px 20px calc(96px + env(safe-area-inset-bottom)); position:relative; }
   .screen.active{ display:flex; flex-direction:column; animation:fadeIn 0.55s var(--ease); }
   @keyframes fadeIn{ from{opacity:0; transform:translateY(12px);} to{opacity:1; transform:translateY(0);} }
   .center{ flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; max-width:480px; margin:0 auto; width:100%; }
@@ -62,7 +62,7 @@
   .nav-title{ font-size:12px; font-weight:600; letter-spacing:.04em; color:var(--silk-dim); }
 
   #music-toggle{
-    position:fixed; bottom:20px; right:20px; z-index:300;
+    position:fixed; bottom:calc(20px + env(safe-area-inset-bottom)); right:20px; z-index:300;
     width:46px; height:46px; border-radius:50%; border:1px solid rgba(249,249,251,0.18); cursor:pointer;
     background:var(--glass-bg); backdrop-filter:blur(16px) saturate(180%); -webkit-backdrop-filter:blur(16px) saturate(180%);
     color:var(--silk); display:flex; align-items:center; justify-content:center;
@@ -73,7 +73,7 @@
   @media print{ #music-toggle, #lang-toggle{ display:none !important; } }
 
   #lang-toggle{
-    position:fixed; bottom:20px; left:20px; z-index:300;
+    position:fixed; bottom:calc(20px + env(safe-area-inset-bottom)); left:20px; z-index:300;
     min-width:46px; height:46px; padding:0 14px; border-radius:999px; border:1px solid rgba(249,249,251,0.18); cursor:pointer;
     background:var(--glass-bg); backdrop-filter:blur(16px) saturate(180%); -webkit-backdrop-filter:blur(16px) saturate(180%);
     color:var(--silk); font-family:'IBM Plex Mono',monospace; font-size:12px; font-weight:600; letter-spacing:.04em;
@@ -623,7 +623,7 @@ en:{
   fullNameLabel:"Full name", relationshipLabel:"Relationship", dobLabel:"Date of birth", genderLabel:"Gender",
   genderSelectOpt:"Select", genderMale:"Male", genderFemale:"Female", genderOther:"Other",
   phoneOptionalLabel:"Phone (optional)", govIdLabel:"Govt. ID (optional)", govIdHint:"Used only for train ticket booking · masked for privacy",
-  berthLabel:"Berth preference", berthNone:"No preference", berthLower:"Lower", berthMiddle:"Middle", berthUpper:"Upper", berthSideLower:"Side Lower",
+  berthLabel:"Berth preference", berthNone:"No preference", berthLower:"Lower", berthMiddle:"Middle", berthUpper:"Upper", berthSideLower:"Side Lower", berthSideUpper:"Side Upper",
   medicalLabel:"Medical needs", medicalPlaceholder:"Optional",
   returnTitle:"Would you like us to book your return tickets too?",
   returnYes:"Yes, please", returnNo:"No, sorted", returnLater:"Decide later",
@@ -694,7 +694,7 @@ hi:{
   fullNameLabel:"पूरा नाम", relationshipLabel:"रिश्ता", dobLabel:"जन्म तिथि", genderLabel:"लिंग",
   genderSelectOpt:"चुनें", genderMale:"पुरुष", genderFemale:"महिला", genderOther:"अन्य",
   phoneOptionalLabel:"फ़ोन (वैकल्पिक)", govIdLabel:"सरकारी पहचान पत्र (वैकल्पिक)", govIdHint:"केवल ट्रेन टिकट बुकिंग के लिए · गोपनीयता हेतु छिपा हुआ",
-  berthLabel:"बर्थ पसंद", berthNone:"कोई पसंद नहीं", berthLower:"निचली", berthMiddle:"मध्य", berthUpper:"ऊपरी", berthSideLower:"साइड लोअर",
+  berthLabel:"बर्थ पसंद", berthNone:"कोई पसंद नहीं", berthLower:"निचली", berthMiddle:"मध्य", berthUpper:"ऊपरी", berthSideLower:"साइड लोअर", berthSideUpper:"साइड अपर",
   medicalLabel:"चिकित्सा आवश्यकताएं", medicalPlaceholder:"वैकल्पिक",
   returnTitle:"क्या आप चाहेंगे कि हम आपकी वापसी टिकट भी बुक करें?",
   returnYes:"हाँ, कृपया", returnNo:"नहीं, व्यवस्थित है", returnLater:"बाद में तय करेंगे",
@@ -765,7 +765,7 @@ te:{
   fullNameLabel:"పూర్తి పేరు", relationshipLabel:"సంబంధం", dobLabel:"పుట్టిన తేదీ", genderLabel:"లింగం",
   genderSelectOpt:"ఎంచుకోండి", genderMale:"పురుషుడు", genderFemale:"స్త్రీ", genderOther:"ఇతర",
   phoneOptionalLabel:"ఫోన్ (ఐచ్ఛికం)", govIdLabel:"ప్రభుత్వ గుర్తింపు (ఐచ్ఛికం)", govIdHint:"రైలు టికెట్ బుకింగ్ కోసం మాత్రమే · గోప్యత కోసం మాస్క్ చేయబడింది",
-  berthLabel:"బెర్త్ ప్రాధాన్యత", berthNone:"ప్రాధాన్యత లేదు", berthLower:"దిగువ", berthMiddle:"మధ్య", berthUpper:"ఎగువ", berthSideLower:"సైడ్ లోయర్",
+  berthLabel:"బెర్త్ ప్రాధాన్యత", berthNone:"ప్రాధాన్యత లేదు", berthLower:"దిగువ", berthMiddle:"మధ్య", berthUpper:"ఎగువ", berthSideLower:"సైడ్ లోయర్", berthSideUpper:"సైడ్ అప్పర్",
   medicalLabel:"వైద్య అవసరాలు", medicalPlaceholder:"ఐచ్ఛికం",
   returnTitle:"మీ తిరుగు టికెట్లను కూడా మేము బుక్ చేయాలా?",
   returnYes:"అవును, దయచేసి", returnNo:"లేదు, ఏర్పాటు ఉంది", returnLater:"తర్వాత నిర్ణయిస్తాము",
@@ -1078,7 +1078,7 @@ function renderFamily(){
         <div class="field"><label>${t('genderLabel')}</label><select onchange="session.members[${i}].gender=this.value"><option value="">${t('genderSelectOpt')}</option><option>${t('genderMale')}</option><option>${t('genderFemale')}</option><option>${t('genderOther')}</option></select></div>
         <div class="field"><label>${t('phoneOptionalLabel')}</label><input type="tel" inputmode="numeric" value="${m.phone||''}" oninput="session.members[${i}].phone=this.value"></div>
         <div class="field"><label>${t('govIdLabel')}</label><input type="password" autocomplete="off" value="${m.govId||''}" oninput="session.members[${i}].govId=this.value"><div class="field-hint">${t('govIdHint')}</div></div>
-        <div class="field"><label>${t('berthLabel')}</label><select onchange="session.members[${i}].berth=this.value"><option value="">${t('berthNone')}</option><option>${t('berthLower')}</option><option>${t('berthMiddle')}</option><option>${t('berthUpper')}</option><option>${t('berthSideLower')}</option></select></div>
+        <div class="field"><label>${t('berthLabel')}</label><select onchange="session.members[${i}].berth=this.value"><option value="">${t('berthNone')}</option><option>${t('berthLower')}</option><option>${t('berthMiddle')}</option><option>${t('berthUpper')}</option><option>${t('berthSideLower')}</option><option>${t('berthSideUpper')}</option></select></div>
         <div class="field"><label>${t('medicalLabel')}</label><input value="${m.medical||''}" oninput="session.members[${i}].medical=this.value" placeholder="${t('medicalPlaceholder')}"></div>
       </div>
     </div>
