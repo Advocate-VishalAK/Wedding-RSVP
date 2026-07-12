@@ -438,8 +438,8 @@
 <!-- FAMILY MEMBERS -->
 <div class="screen" id="screen-family">
   <div class="center" style="max-width:520px">
-    <h1 class="title" data-i18n="familyTitle">Who's travelling with you?</h1>
-    <p class="sub" data-i18n="familySub">Add every family member joining the train journey. You can add as many as you need.</p>
+    <h1 class="title" id="family-title" data-i18n="familyTitle">Who's travelling with you?</h1>
+    <p class="sub" id="family-sub" data-i18n="familySub">Add every family member joining the train journey. You can add as many as you need.</p>
     <div id="family-list" style="width:100%"></div>
     <button class="btn btn-secondary" onclick="addFamilyMember()" data-i18n="addMemberBtn">+ Add family member</button>
     <div style="height:18px"></div>
@@ -608,6 +608,8 @@ en:{
   duplicateConfirm:"Yes, this is correct", duplicateUpdate:"Update details",
   familyTitle:"Who's travelling with you?",
   familySub:"Add every family member joining the train journey. You can add as many as you need.",
+  returnDetailsTitle:"A few details for your return train tickets",
+  returnDetailsSub:"Your return journey will be booked by train — please add everyone travelling back with you.",
   addMemberBtn:"+ Add family member", saveContinueBtn:"Save & continue",
   headOfFamily:"Head of Family", familyMemberN:"Family Member {n}", removeBtn:"Remove",
   fullNameLabel:"Full name", relationshipLabel:"Relationship", dobLabel:"Date of birth", genderLabel:"Gender",
@@ -679,6 +681,8 @@ hi:{
   duplicateConfirm:"हाँ, यह सही है", duplicateUpdate:"विवरण अपडेट करें",
   familyTitle:"आपके साथ कौन यात्रा कर रहा है?",
   familySub:"ट्रेन यात्रा में शामिल हर परिवार सदस्य को जोड़ें। आप जितने चाहें उतने जोड़ सकते हैं।",
+  returnDetailsTitle:"आपकी वापसी ट्रेन टिकट के लिए कुछ विवरण",
+  returnDetailsSub:"आपकी वापसी यात्रा ट्रेन से बुक की जाएगी — कृपया आपके साथ वापस यात्रा करने वाले सभी लोगों को जोड़ें।",
   addMemberBtn:"+ परिवार सदस्य जोड़ें", saveContinueBtn:"सहेजें और आगे बढ़ें",
   headOfFamily:"परिवार के मुखिया", familyMemberN:"परिवार सदस्य {n}", removeBtn:"हटाएं",
   fullNameLabel:"पूरा नाम", relationshipLabel:"रिश्ता", dobLabel:"जन्म तिथि", genderLabel:"लिंग",
@@ -750,6 +754,8 @@ te:{
   duplicateConfirm:"అవును, ఇది సరైనది", duplicateUpdate:"వివరాలు నవీకరించండి",
   familyTitle:"మీతో పాటు ఎవరు ప్రయాణిస్తున్నారు?",
   familySub:"రైలు ప్రయాణంలో చేరే ప్రతి కుటుంబ సభ్యుడిని జోడించండి. మీకు కావలసినంత మంది జోడించవచ్చు.",
+  returnDetailsTitle:"మీ తిరుగు రైలు టికెట్ల కోసం కొన్ని వివరాలు",
+  returnDetailsSub:"మీ తిరుగు ప్రయాణం రైలులో బుక్ చేయబడుతుంది — దయచేసి మీతో తిరిగి ప్రయాణించే అందరినీ జోడించండి.",
   addMemberBtn:"+ కుటుంబ సభ్యుడిని జోడించండి", saveContinueBtn:"సేవ్ చేసి కొనసాగించండి",
   headOfFamily:"కుటుంబ పెద్ద", familyMemberN:"కుటుంబ సభ్యుడు {n}", removeBtn:"తొలగించండి",
   fullNameLabel:"పూర్తి పేరు", relationshipLabel:"సంబంధం", dobLabel:"పుట్టిన తేదీ", genderLabel:"లింగం",
@@ -826,7 +832,7 @@ function refreshDynamicContent(){
   applySideTexts();
   if(id === 'screen-flight-details') applyFlightIntro(session.travelMode);
   if(id === 'screen-travel' || id === 'screen-return') updateTravelProgress(lastTravelStep);
-  if(id === 'screen-family') renderFamily();
+  if(id === 'screen-family'){ applyFamilyScreenText(); renderFamily(); }
   if(id === 'screen-duplicate' && lastDupRecord) renderDuplicate(lastDupRecord);
   if(id === 'screen-guide') renderGuideSummary();
   const nav = document.getElementById('nav');
@@ -1020,6 +1026,8 @@ async function checkPhone(){
   session.phone = phone;
   session.members = [{name, relation:'', dob:'', gender:'', phone:'', govId:'', berth:'', medical:''}];
   updateTravelProgress(2);
+  collectingReturnDetails = false;
+  applyFamilyScreenText();
   renderFamily();
   goTo('screen-family', true);
 }
@@ -1043,6 +1051,8 @@ function renderDuplicate(rec){
 
 function goToUpdateDetails(){
   if(session.travelMode === 'train'){
+    collectingReturnDetails = false;
+    applyFamilyScreenText();
     renderFamily();
     goTo('screen-family', true);
   } else {
@@ -1084,9 +1094,21 @@ function renderFamily(){
   `).join('');
 }
 
+let collectingReturnDetails = false;
+function applyFamilyScreenText(){
+  document.getElementById('family-title').textContent = collectingReturnDetails ? t('returnDetailsTitle') : t('familyTitle');
+  document.getElementById('family-sub').textContent = collectingReturnDetails ? t('returnDetailsSub') : t('familySub');
+}
+
 async function submitFamily(){
   const head = session.members[0];
   if(!head || !head.name){ showToast(t('toastAddHeadName')); return; }
+  if(collectingReturnDetails){
+    collectingReturnDetails = false;
+    await saveRecord();
+    playRingTransition(()=>showGuide());
+    return;
+  }
   session.travelMode = session.travelMode || 'train';
   await saveRecord();
   updateTravelProgress(3);
@@ -1096,6 +1118,13 @@ async function submitFamily(){
 /* ============ RETURN TICKET → RING TRANSITION → GUIDE ============ */
 async function handleReturn(choice){
   session.returnTicket = choice;
+  if(choice === 'yes' && session.travelMode !== 'train'){
+    collectingReturnDetails = true;
+    applyFamilyScreenText();
+    renderFamily();
+    goTo('screen-family', true);
+    return;
+  }
   await saveRecord();
   playRingTransition(()=>showGuide());
 }
