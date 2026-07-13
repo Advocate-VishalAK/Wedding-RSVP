@@ -694,6 +694,8 @@ en:{
   waLabelGroom:"Message Vishal's side on WhatsApp", waLabelBride:"Message Ankita's side on WhatsApp",
   toastInvalidPhone:"Please enter a valid 10-digit phone number",
   toastAddHeadName:"Please add at least the head of family name",
+  toastArrivalDepartureRequired:"Please enter both your arrival and departure dates",
+  toastDobGenderRequired:"Please add date of birth and gender for everyone travelling",
   toastSaveError:"Could not save — please check your connection",
   toastCalendarOpening:"Opening your calendar file — tap \"Add\" if prompted",
   toastCalendarError:"Could not open the calendar file on this device — try again from your phone's browser",
@@ -770,6 +772,8 @@ hi:{
   waLabelGroom:"विशाल पक्ष को WhatsApp पर संदेश भेजें", waLabelBride:"अंकिता पक्ष को WhatsApp पर संदेश भेजें",
   toastInvalidPhone:"कृपया 10 अंकों का सही फ़ोन नंबर दर्ज करें",
   toastAddHeadName:"कृपया कम से कम परिवार के मुखिया का नाम जोड़ें",
+  toastArrivalDepartureRequired:"कृपया आगमन और प्रस्थान दोनों तारीखें दर्ज करें",
+  toastDobGenderRequired:"कृपया यात्रा करने वाले हर व्यक्ति की जन्म तिथि और लिंग जोड़ें",
   toastSaveError:"सहेज नहीं सके — कृपया अपना इंटरनेट कनेक्शन जांचें",
   toastCalendarOpening:"आपकी कैलेंडर फ़ाइल खोली जा रही है — पूछे जाने पर \"Add\" दबाएं",
   toastCalendarError:"इस डिवाइस पर कैलेंडर फ़ाइल नहीं खुल सकी — कृपया अपने फ़ोन के ब्राउज़र से पुनः प्रयास करें",
@@ -846,6 +850,8 @@ te:{
   waLabelGroom:"విశాల్ వైపు వారికి WhatsAppలో సందేశం పంపండి", waLabelBride:"అంకిత వైపు వారికి WhatsAppలో సందేశం పంపండి",
   toastInvalidPhone:"దయచేసి సరైన 10 అంకెల ఫోన్ నంబర్ నమోదు చేయండి",
   toastAddHeadName:"దయచేసి కనీసం కుటుంబ పెద్ద పేరు జోడించండి",
+  toastArrivalDepartureRequired:"దయచేసి రాక మరియు బయలుదేరే తేదీలు రెండూ నమోదు చేయండి",
+  toastDobGenderRequired:"దయచేసి ప్రయాణించే ప్రతి ఒక్కరి పుట్టిన తేదీ మరియు లింగం జోడించండి",
   toastSaveError:"సేవ్ చేయలేకపోయాము — దయచేసి మీ కనెక్షన్ తనిఖీ చేయండి",
   toastCalendarOpening:"మీ క్యాలెండర్ ఫైల్ తెరుస్తున్నాము — అడిగినప్పుడు \"Add\" నొక్కండి",
   toastCalendarError:"ఈ పరికరంలో క్యాలెండర్ ఫైల్ తెరవలేకపోయాము — దయచేసి మీ ఫోన్ బ్రౌజర్ నుండి మళ్లీ ప్రయత్నించండి",
@@ -1069,8 +1075,11 @@ async function findExistingRecord(phone, name){
 async function submitFlightDetails(){
   const name = document.getElementById('fd-name').value.trim();
   const phone = document.getElementById('fd-phone').value.trim();
+  const arrival = document.getElementById('fd-arrival').value;
+  const departure = document.getElementById('fd-departure').value;
   if(!/^\d{10}$/.test(phone)){ showToast(t('toastInvalidPhone')); return; }
   if(!name){ showToast(t('toastAddHeadName')); return; }
+  if(!arrival || !departure){ showToast(t('toastArrivalDepartureRequired')); return; }
 
   const existing = await findExistingRecord(phone, name);
   if(existing){
@@ -1087,8 +1096,8 @@ async function submitFlightDetails(){
   session.phone = phone;
   session.members = [{name, relation:'Head', dob:'', gender:'', phone:'', govId:'', berth:'', medical:''}];
   session.flightDetails = {
-    arrival: document.getElementById('fd-arrival').value,
-    departure: document.getElementById('fd-departure').value,
+    arrival: arrival,
+    departure: departure,
     count: document.getElementById('fd-count').value
   };
   if(parseInt(session.flightDetails.count) > 1){
@@ -1183,10 +1192,22 @@ function renderFamily(){
         <div class="field full"><label>${t('fullNameLabel')}</label><input value="${m.name||''}" oninput="session.members[${i}].name=this.value"></div>
         ${i>0?`<div class="field"><label>${t('relationshipLabel')}</label><input value="${m.relation||''}" oninput="session.members[${i}].relation=this.value"></div>`:''}
         <div class="field"><label>${t('dobLabel')}</label><input type="date" value="${m.dob||''}" oninput="session.members[${i}].dob=this.value"></div>
-        <div class="field"><label>${t('genderLabel')}</label><select onchange="session.members[${i}].gender=this.value"><option value="">${t('genderSelectOpt')}</option><option>${t('genderMale')}</option><option>${t('genderFemale')}</option><option>${t('genderOther')}</option></select></div>
+        <div class="field"><label>${t('genderLabel')}</label><select onchange="session.members[${i}].gender=this.value">
+          <option value="" ${!m.gender?'selected':''}>${t('genderSelectOpt')}</option>
+          <option ${m.gender===t('genderMale')?'selected':''}>${t('genderMale')}</option>
+          <option ${m.gender===t('genderFemale')?'selected':''}>${t('genderFemale')}</option>
+          <option ${m.gender===t('genderOther')?'selected':''}>${t('genderOther')}</option>
+        </select></div>
         <div class="field"><label>${t('phoneOptionalLabel')}</label><input type="tel" inputmode="numeric" value="${m.phone||''}" oninput="session.members[${i}].phone=this.value"></div>
         ${needsTrainFields?`<div class="field"><label>${t('govIdLabel')}</label><input type="password" autocomplete="off" value="${m.govId||''}" oninput="session.members[${i}].govId=this.value"><div class="field-hint">${t('govIdHint')}</div></div>`:''}
-        ${needsTrainFields?`<div class="field"><label>${t('berthLabel')}</label><select onchange="session.members[${i}].berth=this.value"><option value="">${t('berthNone')}</option><option>${t('berthLower')}</option><option>${t('berthMiddle')}</option><option>${t('berthUpper')}</option><option>${t('berthSideLower')}</option><option>${t('berthSideUpper')}</option></select></div>`:''}
+        ${needsTrainFields?`<div class="field"><label>${t('berthLabel')}</label><select onchange="session.members[${i}].berth=this.value">
+          <option value="" ${!m.berth?'selected':''}>${t('berthNone')}</option>
+          <option ${m.berth===t('berthLower')?'selected':''}>${t('berthLower')}</option>
+          <option ${m.berth===t('berthMiddle')?'selected':''}>${t('berthMiddle')}</option>
+          <option ${m.berth===t('berthUpper')?'selected':''}>${t('berthUpper')}</option>
+          <option ${m.berth===t('berthSideLower')?'selected':''}>${t('berthSideLower')}</option>
+          <option ${m.berth===t('berthSideUpper')?'selected':''}>${t('berthSideUpper')}</option>
+        </select></div>`:''}
         <div class="field"><label>${t('medicalLabel')}</label><input value="${m.medical||''}" oninput="session.members[${i}].medical=this.value" placeholder="${t('medicalPlaceholder')}"></div>
       </div>
     </div>
@@ -1206,6 +1227,10 @@ function applyFamilyScreenText(){
 async function submitFamily(){
   const head = session.members[0];
   if(!head || !head.name){ showToast(t('toastAddHeadName')); return; }
+  for(const m of session.members){
+    if(!m.name){ showToast(t('toastAddHeadName')); return; }
+    if(!m.dob || !m.gender){ showToast(t('toastDobGenderRequired')); return; }
+  }
   if(familyScreenMode === 'returnDetails'){
     familyScreenMode = null;
     await saveRecord();
