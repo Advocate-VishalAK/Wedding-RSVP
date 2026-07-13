@@ -474,7 +474,7 @@
     <p class="sub" id="dup-registered-by" data-i18n="duplicateRegisteredDefault">This family was already registered with us.</p>
     <div class="dup-box glass" id="dup-details"></div>
     <div class="btn-row-h">
-      <button class="btn btn-primary" style="max-width:170px" onclick="showGuide()" data-i18n="duplicateConfirm">Yes, this is correct</button>
+      <button class="btn btn-primary" style="max-width:170px" onclick="confirmDuplicate()" data-i18n="duplicateConfirm">Yes, this is correct</button>
       <button class="btn btn-secondary" style="max-width:170px" onclick="goToUpdateDetails()" data-i18n="duplicateUpdate">Update details</button>
     </div>
   </div>
@@ -655,6 +655,7 @@ en:{
   duplicateTitle:"Ohh, looks like you're already registered! 👋",
   duplicateRegisteredDefault:"This family was already registered with us.",
   duplicateRegisteredName:"This family was already registered by {name}. Here's what's on file:",
+  duplicatePhone:"Phone on file", duplicatePhoneMismatch:"This name is already registered under a different phone number: {oldPhone}. If the number you just entered is correct, tap \"Update details\" to fix it.",
   duplicateHead:"Head of family", duplicateMembers:"Family members", duplicateTravelMode:"Travel mode",
   duplicateReturn:"Return ticket", duplicateNotDecided:"not yet decided", duplicateRegisteredOn:"Registered",
   duplicateConfirm:"Yes, this is correct", duplicateUpdate:"Update details",
@@ -733,6 +734,7 @@ hi:{
   duplicateTitle:"ओह, लगता है आप पहले से पंजीकृत हैं! 👋",
   duplicateRegisteredDefault:"यह परिवार पहले से हमारे पास पंजीकृत है।",
   duplicateRegisteredName:"यह परिवार पहले ही {name} द्वारा पंजीकृत किया जा चुका है। यहाँ विवरण है:",
+  duplicatePhone:"दर्ज फ़ोन नंबर", duplicatePhoneMismatch:"यह नाम पहले से एक अलग फ़ोन नंबर पर पंजीकृत है: {oldPhone}। अगर आपने अभी जो नंबर डाला है वह सही है, तो ठीक करने के लिए \"विवरण अपडेट करें\" दबाएं।",
   duplicateHead:"परिवार के मुखिया", duplicateMembers:"परिवार के सदस्य", duplicateTravelMode:"यात्रा का तरीका",
   duplicateReturn:"वापसी टिकट", duplicateNotDecided:"अभी तय नहीं", duplicateRegisteredOn:"पंजीकृत तिथि",
   duplicateConfirm:"हाँ, यह सही है", duplicateUpdate:"विवरण अपडेट करें",
@@ -811,6 +813,7 @@ te:{
   duplicateTitle:"ఓహ్, మీరు ఇప్పటికే నమోదయ్యారు అనిపిస్తోంది! 👋",
   duplicateRegisteredDefault:"ఈ కుటుంబం ఇప్పటికే మా వద్ద నమోదైంది.",
   duplicateRegisteredName:"ఈ కుటుంబాన్ని ఇప్పటికే {name} నమోదు చేశారు. వివరాలు ఇక్కడ ఉన్నాయి:",
+  duplicatePhone:"నమోదైన ఫోన్ నంబర్", duplicatePhoneMismatch:"ఈ పేరు ఇప్పటికే వేరే ఫోన్ నంబర్‌తో నమోదైంది: {oldPhone}. మీరు ఇప్పుడే నమోదు చేసిన నంబర్ సరైనది అయితే, సరిచేయడానికి \"వివరాలు నవీకరించండి\" నొక్కండి.",
   duplicateHead:"కుటుంబ పెద్ద", duplicateMembers:"కుటుంబ సభ్యులు", duplicateTravelMode:"ప్రయాణ విధానం",
   duplicateReturn:"తిరుగు టికెట్", duplicateNotDecided:"ఇంకా నిర్ణయించలేదు", duplicateRegisteredOn:"నమోదు తేదీ",
   duplicateConfirm:"అవును, ఇది సరైనది", duplicateUpdate:"వివరాలు నవీకరించండి",
@@ -1072,6 +1075,8 @@ async function findExistingRecord(phone, name){
   return null;
 }
 
+let updatingExistingRecord = false;
+
 async function submitFlightDetails(){
   const name = document.getElementById('fd-name').value.trim();
   const phone = document.getElementById('fd-phone').value.trim();
@@ -1081,26 +1086,37 @@ async function submitFlightDetails(){
   if(!name){ showToast(t('toastAddHeadName')); return; }
   if(!arrival || !departure){ showToast(t('toastArrivalDepartureRequired')); return; }
 
-  const existing = await findExistingRecord(phone, name);
-  if(existing){
-    session.phone = existing.phone;
-    session.members = existing.members || [];
-    session.travelMode = existing.travelMode || session.travelMode;
-    session.returnTicket = existing.returnTicket;
-    session.flightDetails = existing.flightDetails || null;
-    renderDuplicate(existing);
-    goTo('screen-duplicate', true);
-    return;
+  if(updatingExistingRecord){
+    // Already reviewing/editing a known record (via "Update details") — don't
+    // re-run the duplicate lookup, or a corrected phone number would keep
+    // matching the old record by name and bounce back to the duplicate screen.
+    updatingExistingRecord = false;
+    if(session.members[0]) session.members[0].name = name;
+    else session.members = [{name, relation:'Head', dob:'', gender:'', phone:'', govId:'', berth:'', medical:''}];
+  } else {
+    const existing = await findExistingRecord(phone, name);
+    if(existing){
+      previousPhoneForUpdate = existing.phone !== phone ? existing.phone : null;
+      session.phone = phone;
+      session.members = existing.members || [];
+      session.travelMode = existing.travelMode || session.travelMode;
+      session.returnTicket = existing.returnTicket;
+      session.flightDetails = existing.flightDetails || null;
+      renderDuplicate(existing);
+      goTo('screen-duplicate', true);
+      return;
+    }
+    previousPhoneForUpdate = null;
+    session.members = [{name, relation:'Head', dob:'', gender:'', phone:'', govId:'', berth:'', medical:''}];
   }
 
   session.phone = phone;
-  session.members = [{name, relation:'Head', dob:'', gender:'', phone:'', govId:'', berth:'', medical:''}];
   session.flightDetails = {
     arrival: arrival,
     departure: departure,
     count: document.getElementById('fd-count').value
   };
-  if(parseInt(session.flightDetails.count) > 1){
+  if(parseInt(session.flightDetails.count) > session.members.length){
     familyScreenMode = 'companions';
     applyFamilyScreenText();
     renderFamily();
@@ -1120,7 +1136,8 @@ async function checkPhone(){
 
   const existing = await findExistingRecord(phone, name);
   if(existing){
-    session.phone = existing.phone;
+    previousPhoneForUpdate = existing.phone !== phone ? existing.phone : null;
+    session.phone = phone;
     session.members = existing.members || [];
     session.travelMode = existing.travelMode || session.travelMode;
     session.returnTicket = existing.returnTicket;
@@ -1130,6 +1147,7 @@ async function checkPhone(){
     return;
   }
 
+  previousPhoneForUpdate = null;
   session.phone = phone;
   session.members = [{name, relation:'', dob:'', gender:'', phone:'', govId:'', berth:'', medical:''}];
   updateTravelProgress(2);
@@ -1140,20 +1158,28 @@ async function checkPhone(){
 }
 
 let lastDupRecord = null;
+let previousPhoneForUpdate = null;
 function renderDuplicate(rec){
   lastDupRecord = rec;
   const headName = rec.members?.[0]?.name;
-  document.getElementById('dup-registered-by').textContent = headName
-    ? t('duplicateRegisteredName', {name:headName})
-    : t('duplicateRegisteredDefault');
+  document.getElementById('dup-registered-by').textContent = previousPhoneForUpdate
+    ? t('duplicatePhoneMismatch', {oldPhone: rec.phone})
+    : (headName ? t('duplicateRegisteredName', {name:headName}) : t('duplicateRegisteredDefault'));
   const box = document.getElementById('dup-details');
   box.innerHTML = `
+    <div class="dup-row"><span>${t('duplicatePhone')}</span><span>${rec.phone}</span></div>
     <div class="dup-row"><span>${t('duplicateHead')}</span><span>${rec.members?.[0]?.name || '—'}</span></div>
     <div class="dup-row"><span>${t('duplicateMembers')}</span><span>${(rec.members||[]).length}</span></div>
     <div class="dup-row"><span>${t('duplicateTravelMode')}</span><span>${rec.travelMode==='train' ? rec.travelMode+' · '+trainRoute(rec.side).onward : (rec.travelMode||'—')}</span></div>
     <div class="dup-row"><span>${t('duplicateReturn')}</span><span>${rec.returnTicket||t('duplicateNotDecided')}</span></div>
     <div class="dup-row"><span>${t('duplicateRegisteredOn')}</span><span>${rec.timestamp ? new Date(rec.timestamp).toLocaleDateString() : '—'}</span></div>
   `;
+}
+
+function confirmDuplicate(){
+  if(lastDupRecord) session.phone = lastDupRecord.phone;
+  previousPhoneForUpdate = null;
+  showGuide();
 }
 
 function goToUpdateDetails(){
@@ -1170,6 +1196,7 @@ function goToUpdateDetails(){
     }
     document.getElementById('fd-name').value = session.members?.[0]?.name || '';
     document.getElementById('fd-phone').value = session.phone || '';
+    updatingExistingRecord = true;
     applyFlightIntro(session.travelMode);
     goTo('screen-flight-details', true);
   }
@@ -1313,7 +1340,8 @@ async function saveRecord(){
   const record = {
     phone: session.phone, side: session.side, rsvp: session.rsvp,
     travelMode: session.travelMode, members: session.members,
-    flightDetails: session.flightDetails, returnTicket: session.returnTicket
+    flightDetails: session.flightDetails, returnTicket: session.returnTicket,
+    previousPhone: previousPhoneForUpdate
   };
   try{
     const res = await fetch('/api/save', {
@@ -1322,6 +1350,7 @@ async function saveRecord(){
       body: JSON.stringify(record)
     });
     if(!res.ok) throw new Error('save failed');
+    previousPhoneForUpdate = null;
   }catch(e){ console.error('Save error', e); showToast(t('toastSaveError')); }
 }
 

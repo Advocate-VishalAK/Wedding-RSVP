@@ -63,9 +63,14 @@ const app = express();
 app.use(express.json());
 
 app.post('/api/save', async (req, res) => {
-  const { phone, side, rsvp, travelMode, members, flightDetails, returnTicket } = req.body || {};
+  const { phone, side, rsvp, travelMode, members, flightDetails, returnTicket, previousPhone } = req.body || {};
   if (!/^\d{10}$/.test(phone || '')) {
     return res.status(400).json({ error: 'Valid 10-digit phone number required' });
+  }
+  if (previousPhone && /^\d{10}$/.test(previousPhone) && previousPhone !== phone) {
+    // Guest corrected a previously mistyped phone number — since phone is the
+    // primary key, drop the old row so the correction doesn't leave a duplicate.
+    await db.execute({ sql: 'DELETE FROM families WHERE phone = ?', args: [previousPhone] });
   }
   const timestamp = Date.now();
   const headName = normalizeName(members && members[0] && members[0].name);
