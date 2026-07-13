@@ -83,6 +83,7 @@
   .btn-ghost{ background:transparent; color:var(--silk-dim); font-weight:600; font-size:14px; }
   .btn-row{ display:flex; flex-direction:column; gap:14px; align-items:center; width:100%; }
   .btn-row-h{ display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+  .train-btn-route{ display:inline-block; font-size:11.5px; font-weight:600; opacity:0.7; margin-top:3px; letter-spacing:.02em; }
 
   .field{ text-align:left; margin-bottom:18px; width:100%; }
   .field label{ display:block; font-size:12px; font-weight:700; color:var(--silk-dim); text-transform:uppercase; letter-spacing:.05em; margin-bottom:7px; }
@@ -619,7 +620,7 @@ en:{
   declinedTitle:"We'll miss having you there",
   declinedSub:"We'd love for you to still be part of the day, wherever you are — here's the date, always saved for you.",
   addToCalendar:"Add to my calendar", seeGuideAnyway:"See the wedding guide anyway",
-  travelEyebrow:"Travel", travelTitle:"How will you be travelling?",
+  travelEyebrow:"Travel", travelTitle:"How will you be travelling?", progressDetailsStep:"Details",
   modeTrain:"Train Journey — arranged by us", modeTrainFamily:"Train Journey — arranged by the {family} family",
   modeFlight:"Flight", modeCar:"Car", modeBus:"Bus",
   travelDetailsTitle:"A few travel details",
@@ -692,7 +693,7 @@ hi:{
   declinedTitle:"आपकी कमी बहुत खलेगी",
   declinedSub:"हम चाहेंगे कि आप जहाँ भी हों, इस दिन का हिस्सा बने रहें — यह तारीख हमेशा आपके लिए सहेजी गई है।",
   addToCalendar:"अपने कैलेंडर में जोड़ें", seeGuideAnyway:"फिर भी शादी की गाइड देखें",
-  travelEyebrow:"यात्रा", travelTitle:"आप कैसे यात्रा करेंगे?",
+  travelEyebrow:"यात्रा", travelTitle:"आप कैसे यात्रा करेंगे?", progressDetailsStep:"विवरण",
   modeTrain:"ट्रेन यात्रा — हमारे द्वारा आयोजित", modeTrainFamily:"ट्रेन यात्रा — {family} परिवार द्वारा आयोजित",
   modeFlight:"फ्लाइट", modeCar:"कार", modeBus:"बस",
   travelDetailsTitle:"कुछ यात्रा विवरण",
@@ -765,7 +766,7 @@ te:{
   declinedTitle:"మీరు లేకపోవడం మాకు లోటుగా ఉంటుంది",
   declinedSub:"మీరు ఎక్కడున్నా ఈ రోజులో భాగంగా ఉండాలని మేము కోరుకుంటున్నాము — ఈ తేదీ ఎప్పటికీ మీ కోసం భద్రపరచబడింది.",
   addToCalendar:"నా క్యాలెండర్‌కు జోడించండి", seeGuideAnyway:"అయినా వివాహ గైడ్ చూడండి",
-  travelEyebrow:"ప్రయాణం", travelTitle:"మీరు ఎలా ప్రయాణిస్తారు?",
+  travelEyebrow:"ప్రయాణం", travelTitle:"మీరు ఎలా ప్రయాణిస్తారు?", progressDetailsStep:"వివరాలు",
   modeTrain:"రైలు ప్రయాణం — మా ఏర్పాటు", modeTrainFamily:"రైలు ప్రయాణం — {family} కుటుంబం ఏర్పాటు చేసింది",
   modeFlight:"విమానం", modeCar:"కారు", modeBus:"బస్సు",
   travelDetailsTitle:"కొన్ని ప్రయాణ వివరాలు",
@@ -945,7 +946,7 @@ function applySideTexts(){
   }
   const family = familyBySide[side];
   const route = trainRoute(side).onward;
-  document.getElementById('train-btn').textContent = '🚆 ' + t('modeTrainFamily', {family}) + ' · ' + route;
+  document.getElementById('train-btn').innerHTML = `🚆 ${t('modeTrainFamily', {family})}<br><span class="train-btn-route">${route}</span>`;
   document.getElementById('phone-check-family-line').textContent = t('trainArrangedFamily', {family}) + ' ' + route + '.';
 }
 
@@ -965,7 +966,7 @@ function handleRsvp(yes){
 let lastTravelStep = 1;
 function updateTravelProgress(step){
   lastTravelStep = step;
-  const labels = [t('travelEyebrow'), t('travelDetailsTitle').split(' ')[0], t('summaryReturnTickets')];
+  const labels = [t('travelEyebrow'), t('progressDetailsStep'), t('summaryReturnTickets')];
   const el = document.getElementById('progress-travel');
   el.innerHTML = labels.map((l,i)=>{
     const n=i+1;
@@ -1192,7 +1193,7 @@ function renderGuideSummary(){
   }
   if(session.returnTicket){
     rows.push([t('summaryReturnTickets'), session.returnTicket==='yes'?t('summaryRequested'):(session.returnTicket==='no'?t('summaryNotNeeded'):t('summaryDecidingLater'))]);
-    if(session.travelMode==='train' && session.returnTicket==='yes'){
+    if(session.returnTicket==='yes'){
       rows.push([t('summaryReturnRoute'), trainRoute(session.side).return]);
     }
   }
