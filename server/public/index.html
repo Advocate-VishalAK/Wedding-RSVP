@@ -85,6 +85,23 @@
   .btn-row-h{ display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
   .train-btn-route{ display:inline-block; font-size:11.5px; font-weight:600; opacity:0.7; margin-top:3px; letter-spacing:.02em; }
 
+  .cal-legend{ display:flex; align-items:center; justify-content:center; gap:6px; font-size:11.5px; color:var(--silk-dim); margin-bottom:14px; flex-wrap:wrap; }
+  .cal-dot{ width:10px; height:10px; border-radius:50%; display:inline-block; margin-left:10px; }
+  .cal-dot:first-child{ margin-left:0; }
+  .cal-dot.gold{ background:var(--groom); }
+  .cal-dot.rose{ background:var(--bride); }
+  .mini-calendar-row{ display:flex; gap:18px; margin-bottom:20px; flex-wrap:wrap; justify-content:center; width:100%; }
+  .mini-calendar{ flex:1; min-width:150px; max-width:200px; }
+  .cal-month-label{ font-family:'IBM Plex Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:var(--silk-faint); margin-bottom:8px; text-align:center; }
+  .cal-grid{ display:grid; grid-template-columns:repeat(7,1fr); gap:3px; }
+  .cal-grid.cal-weekdays{ margin-bottom:4px; }
+  .cal-grid.cal-weekdays span{ font-size:9px; text-align:center; color:var(--silk-faint); font-family:'IBM Plex Mono',monospace; }
+  .cal-cell{ aspect-ratio:1; display:flex; align-items:center; justify-content:center; font-size:11px; border-radius:6px; color:var(--silk-dim); }
+  .cal-cell.empty{ visibility:hidden; }
+  .cal-cell.highlight{ font-weight:700; color:var(--base); }
+  .cal-cell.highlight.gold{ background:var(--groom); }
+  .cal-cell.highlight.rose{ background:var(--bride); }
+
   .field{ text-align:left; margin-bottom:18px; width:100%; }
   .field label{ display:block; font-size:12px; font-weight:700; color:var(--silk-dim); text-transform:uppercase; letter-spacing:.05em; margin-bottom:7px; }
   .field input, .field select{
@@ -425,6 +442,7 @@
   <div class="center">
     <h1 class="title" data-i18n="travelDetailsTitle">A few travel details</h1>
     <p class="sub" id="fd-intro-line" data-i18n="travelDetailsIntroDefault">Let us know your plans so we can prepare for your arrival.</p>
+    <div id="travel-calendar" style="width:100%"></div>
     <div class="field"><label data-i18n="fullNameLabel">Full name</label><input type="text" id="fd-name"></div>
     <div class="field"><label data-i18n="phoneLabel">Phone number</label><input type="tel" inputmode="numeric" id="fd-phone" data-i18n-placeholder="phonePlaceholder" placeholder="10-digit mobile number"></div>
     <div class="field"><label data-i18n="arrivalLabel">Date of arrival</label><input type="date" id="fd-arrival"></div>
@@ -510,7 +528,7 @@
       <div class="guide-card glass reveal" id="guide-itinerary-groom" style="border:1px solid var(--glass-border-gold)">
         <h3 data-i18n="groomJourneyTitle">Groom's Journey — Hyderabad ✦ Lucknow</h3>
         <div class="itinerary-scroll">
-          <div class="itinerary-card glass"><div class="day">25 NOV</div><div class="ev" data-i18n="evKotnam">Kotnam Ritual</div><div class="loc" data-i18n="hyderabadLabel">Hyderabad</div></div>
+          <div class="itinerary-card glass"><div class="day">25 NOV</div><div class="ev" data-i18n="evKotnam">Vishal's Groom Ritual</div><div class="loc" data-i18n="hyderabadLabel">Hyderabad</div></div>
           <div class="itinerary-card glass"><div class="day">26–27 NOV</div><div class="ev" data-i18n="evJourneyLucknow">Journey to Lucknow</div><div class="loc" data-i18n="byTrain">By train</div></div>
           <div class="itinerary-card glass"><div class="day">28 NOV</div><div class="ev" data-i18n="evArrival">Arrival</div><div class="loc" data-i18n="lucknowLabel">Lucknow</div></div>
           <div class="itinerary-card glass"><div class="day">29 NOV AM</div><div class="ev" data-i18n="evHaldi">Haldi</div><div class="loc" data-i18n="lucknowLabel">Lucknow</div></div>
@@ -573,7 +591,7 @@
       <button class="btn btn-ghost" style="width:auto" onclick="goTo('screen-language', true)">← Back to guest view</button>
     </div>
     <div class="glass" style="padding:4px; overflow-x:auto">
-      <table id="admin-table"><thead><tr><th>Phone</th><th>Side</th><th>RSVP</th><th>Travel</th><th>Members</th><th>Return</th></tr></thead><tbody></tbody></table>
+      <table id="admin-table"><thead><tr><th>Phone</th><th>Side</th><th>RSVP</th><th>Travel</th><th>Travellers</th><th>Arrival</th><th>Departure</th><th>Return</th></tr></thead><tbody></tbody></table>
     </div>
   </div>
 </div>
@@ -644,6 +662,9 @@ en:{
   familySub:"Add every family member joining the train journey. You can add as many as you need.",
   returnDetailsTitle:"A few details for your return train tickets",
   returnDetailsSub:"Your return journey will be booked by train — please add everyone travelling back with you.",
+  companionsTitle:"Who's coming with you?",
+  companionsSub:"You told us {count} people in total — add each person's name below so we know exactly who to expect.",
+  calLegendHyderabad:"Hyderabad events", calLegendLucknow:"Lucknow events",
   addMemberBtn:"+ Add family member", saveContinueBtn:"Save & continue",
   headOfFamily:"Head of Family", familyMemberN:"Family Member {n}", removeBtn:"Remove",
   fullNameLabel:"Full name", relationshipLabel:"Relationship", dobLabel:"Date of birth", genderLabel:"Gender",
@@ -662,7 +683,7 @@ en:{
   summaryAccommodation:"Accommodation", summaryRequested:"Requested", summaryNotNeeded:"Not needed",
   summaryReturnTickets:"Return tickets", summaryReturnRoute:"Return journey", summaryDecidingLater:"Deciding later", summaryPhone:"Registered phone",
   groomJourneyTitle:"Groom's Journey — Hyderabad ✦ Lucknow", brideJourneyTitle:"Bride's Journey — Hyderabad Celebrations",
-  evKotnam:"Kotnam Ritual", evJourneyLucknow:"Journey to Lucknow", evArrival:"Arrival", evHaldi:"Haldi",
+  evKotnam:"Vishal's Groom Ritual", evJourneyLucknow:"Journey to Lucknow", evArrival:"Arrival", evHaldi:"Haldi",
   evMehendi:"Mehendi · Engagement · Sangeet", evWedding:"The Wedding", evReturnHyd:"Return to Hyderabad",
   evRest:"Rest day", evSouthIndian:"South Indian Style Marriage", evReception:"Reception", evKatha:"Sathyanarayana Katha",
   wearTitle:"What to Wear", wearHaldi:"Haldi: Yellow (+ sunglasses!)", wearMehendi:"Mehendi: Green", wearSangeet:"Sangeet: Western",
@@ -717,6 +738,9 @@ hi:{
   familySub:"ट्रेन यात्रा में शामिल हर परिवार सदस्य को जोड़ें। आप जितने चाहें उतने जोड़ सकते हैं।",
   returnDetailsTitle:"आपकी वापसी ट्रेन टिकट के लिए कुछ विवरण",
   returnDetailsSub:"आपकी वापसी यात्रा ट्रेन से बुक की जाएगी — कृपया आपके साथ वापस यात्रा करने वाले सभी लोगों को जोड़ें।",
+  companionsTitle:"आपके साथ कौन आ रहा है?",
+  companionsSub:"आपने कुल {count} लोग बताए थे — कृपया हर व्यक्ति का नाम नीचे जोड़ें ताकि हमें पता हो कि किसकी उम्मीद करनी है।",
+  calLegendHyderabad:"हैदराबाद कार्यक्रम", calLegendLucknow:"लखनऊ कार्यक्रम",
   addMemberBtn:"+ परिवार सदस्य जोड़ें", saveContinueBtn:"सहेजें और आगे बढ़ें",
   headOfFamily:"परिवार के मुखिया", familyMemberN:"परिवार सदस्य {n}", removeBtn:"हटाएं",
   fullNameLabel:"पूरा नाम", relationshipLabel:"रिश्ता", dobLabel:"जन्म तिथि", genderLabel:"लिंग",
@@ -735,7 +759,7 @@ hi:{
   summaryAccommodation:"ठहरने की व्यवस्था", summaryRequested:"अनुरोध किया गया", summaryNotNeeded:"आवश्यकता नहीं",
   summaryReturnTickets:"वापसी टिकट", summaryReturnRoute:"वापसी यात्रा", summaryDecidingLater:"बाद में तय करेंगे", summaryPhone:"पंजीकृत फ़ोन नंबर",
   groomJourneyTitle:"वर की यात्रा — हैदराबाद ✦ लखनऊ", brideJourneyTitle:"वधू की यात्रा — हैदराबाद समारोह",
-  evKotnam:"कोटनम अनुष्ठान", evJourneyLucknow:"लखनऊ की यात्रा", evArrival:"आगमन", evHaldi:"हल्दी",
+  evKotnam:"विशाल का वर अनुष्ठान", evJourneyLucknow:"लखनऊ की यात्रा", evArrival:"आगमन", evHaldi:"हल्दी",
   evMehendi:"मेहंदी · सगाई · संगीत", evWedding:"विवाह समारोह", evReturnHyd:"हैदराबाद वापसी",
   evRest:"विश्राम दिवस", evSouthIndian:"दक्षिण भारतीय शैली विवाह", evReception:"स्वागत समारोह", evKatha:"सत्यनारायण कथा",
   wearTitle:"क्या पहनें", wearHaldi:"हल्दी: पीला (+ धूप का चश्मा!)", wearMehendi:"मेहंदी: हरा", wearSangeet:"संगीत: वेस्टर्न आउटफिट",
@@ -790,6 +814,9 @@ te:{
   familySub:"రైలు ప్రయాణంలో చేరే ప్రతి కుటుంబ సభ్యుడిని జోడించండి. మీకు కావలసినంత మంది జోడించవచ్చు.",
   returnDetailsTitle:"మీ తిరుగు రైలు టికెట్ల కోసం కొన్ని వివరాలు",
   returnDetailsSub:"మీ తిరుగు ప్రయాణం రైలులో బుక్ చేయబడుతుంది — దయచేసి మీతో తిరిగి ప్రయాణించే అందరినీ జోడించండి.",
+  companionsTitle:"మీతో పాటు ఎవరు వస్తున్నారు?",
+  companionsSub:"మీరు మొత్తం {count} మంది అని చెప్పారు — ప్రతి వ్యక్తి పేరును దిగువ జోడించండి, తద్వారా మేము ఎవరిని ఆశించాలో తెలుసుకుంటాము.",
+  calLegendHyderabad:"హైదరాబాద్ వేడుకలు", calLegendLucknow:"లక్నో వేడుకలు",
   addMemberBtn:"+ కుటుంబ సభ్యుడిని జోడించండి", saveContinueBtn:"సేవ్ చేసి కొనసాగించండి",
   headOfFamily:"కుటుంబ పెద్ద", familyMemberN:"కుటుంబ సభ్యుడు {n}", removeBtn:"తొలగించండి",
   fullNameLabel:"పూర్తి పేరు", relationshipLabel:"సంబంధం", dobLabel:"పుట్టిన తేదీ", genderLabel:"లింగం",
@@ -808,7 +835,7 @@ te:{
   summaryAccommodation:"వసతి", summaryRequested:"అభ్యర్థించారు", summaryNotNeeded:"అవసరం లేదు",
   summaryReturnTickets:"తిరుగు టికెట్లు", summaryReturnRoute:"తిరుగు ప్రయాణం", summaryDecidingLater:"తర్వాత నిర్ణయిస్తాము", summaryPhone:"నమోదైన ఫోన్",
   groomJourneyTitle:"వరుడి ప్రయాణం — హైదరాబాద్ ✦ లక్నో", brideJourneyTitle:"వధువు ప్రయాణం — హైదరాబాద్ వేడుకలు",
-  evKotnam:"కొట్నం ఆచారం", evJourneyLucknow:"లక్నోకు ప్రయాణం", evArrival:"రాక", evHaldi:"పసుపు",
+  evKotnam:"విశాల్ వరుడి ఆచారం", evJourneyLucknow:"లక్నోకు ప్రయాణం", evArrival:"రాక", evHaldi:"పసుపు",
   evMehendi:"మెహందీ · నిశ్చితార్థం · సంగీత్", evWedding:"వివాహం", evReturnHyd:"హైదరాబాద్‌కు తిరుగు ప్రయాణం",
   evRest:"విశ్రాంతి రోజు", evSouthIndian:"దక్షిణ భారత శైలి వివాహం", evReception:"రిసెప్షన్", evKatha:"సత్యనారాయణ కథ",
   wearTitle:"ఏమి ధరించాలి", wearHaldi:"పసుపు: పసుపు రంగు (+ కళ్లద్దాలు!)", wearMehendi:"మెహందీ: ఆకుపచ్చ", wearSangeet:"సంగీత్: వెస్ట్రన్ దుస్తులు",
@@ -978,6 +1005,36 @@ function updateTravelProgress(step){
 function applyFlightIntro(mode){
   const introKeys = { flight:'travelDetailsIntroFlight', car:'travelDetailsIntroCar', bus:'travelDetailsIntroBus' };
   document.getElementById('fd-intro-line').textContent = t(introKeys[mode] || 'travelDetailsIntroDefault');
+  renderTravelCalendar();
+}
+
+/* ============ EVENT-DATES CALENDAR (helps flight/car/bus guests pick dates) ============ */
+function buildMiniCalendar(year, month, monthLabel, highlights){
+  const firstDay = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month+1, 0).getDate();
+  let cells = '';
+  for(let i=0;i<firstDay;i++) cells += '<div class="cal-cell empty"></div>';
+  for(let d=1; d<=daysInMonth; d++){
+    const hl = highlights[d];
+    cells += `<div class="cal-cell${hl?' highlight '+hl:''}">${d}</div>`;
+  }
+  return `
+    <div class="mini-calendar">
+      <div class="cal-month-label">${monthLabel}</div>
+      <div class="cal-grid cal-weekdays"><span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span></div>
+      <div class="cal-grid">${cells}</div>
+    </div>
+  `;
+}
+function renderTravelCalendar(){
+  const container = document.getElementById('travel-calendar');
+  if(!container) return;
+  const nov = buildMiniCalendar(2026, 10, 'November 2026', {25:'gold', 28:'rose', 29:'rose', 30:'rose'});
+  const dec = buildMiniCalendar(2026, 11, 'December 2026', {4:'gold', 5:'gold'});
+  container.innerHTML = `
+    <div class="cal-legend"><span class="cal-dot gold"></span>${t('calLegendHyderabad')}<span class="cal-dot rose"></span>${t('calLegendLucknow')}</div>
+    <div class="mini-calendar-row">${nov}${dec}</div>
+  `;
 }
 
 function chooseTravel(mode){
@@ -1034,6 +1091,13 @@ async function submitFlightDetails(){
     departure: document.getElementById('fd-departure').value,
     count: document.getElementById('fd-count').value
   };
+  if(parseInt(session.flightDetails.count) > 1){
+    familyScreenMode = 'companions';
+    applyFamilyScreenText();
+    renderFamily();
+    goTo('screen-family', true);
+    return;
+  }
   await saveRecord();
   updateTravelProgress(3);
   goTo('screen-return', true);
@@ -1060,7 +1124,7 @@ async function checkPhone(){
   session.phone = phone;
   session.members = [{name, relation:'', dob:'', gender:'', phone:'', govId:'', berth:'', medical:''}];
   updateTravelProgress(2);
-  collectingReturnDetails = false;
+  familyScreenMode = null;
   applyFamilyScreenText();
   renderFamily();
   goTo('screen-family', true);
@@ -1085,7 +1149,7 @@ function renderDuplicate(rec){
 
 function goToUpdateDetails(){
   if(session.travelMode === 'train'){
-    collectingReturnDetails = false;
+    familyScreenMode = null;
     applyFamilyScreenText();
     renderFamily();
     goTo('screen-family', true);
@@ -1111,6 +1175,7 @@ function removeFamilyMember(i){ session.members.splice(i,1); renderFamily(); }
 function renderFamily(){
   const list = document.getElementById('family-list');
   if(session.members.length===0) addFamilyMember();
+  const needsTrainFields = session.travelMode === 'train' || familyScreenMode === 'returnDetails';
   list.innerHTML = session.members.map((m,i)=>`
     <div class="fam-card glass">
       <div class="fam-card-head"><b>${i===0?t('headOfFamily'):t('familyMemberN',{n:i+1})}</b>${i>0?`<button class="remove" onclick="removeFamilyMember(${i})">${t('removeBtn')}</button>`:''}</div>
@@ -1120,27 +1185,38 @@ function renderFamily(){
         <div class="field"><label>${t('dobLabel')}</label><input type="date" value="${m.dob||''}" oninput="session.members[${i}].dob=this.value"></div>
         <div class="field"><label>${t('genderLabel')}</label><select onchange="session.members[${i}].gender=this.value"><option value="">${t('genderSelectOpt')}</option><option>${t('genderMale')}</option><option>${t('genderFemale')}</option><option>${t('genderOther')}</option></select></div>
         <div class="field"><label>${t('phoneOptionalLabel')}</label><input type="tel" inputmode="numeric" value="${m.phone||''}" oninput="session.members[${i}].phone=this.value"></div>
-        <div class="field"><label>${t('govIdLabel')}</label><input type="password" autocomplete="off" value="${m.govId||''}" oninput="session.members[${i}].govId=this.value"><div class="field-hint">${t('govIdHint')}</div></div>
-        <div class="field"><label>${t('berthLabel')}</label><select onchange="session.members[${i}].berth=this.value"><option value="">${t('berthNone')}</option><option>${t('berthLower')}</option><option>${t('berthMiddle')}</option><option>${t('berthUpper')}</option><option>${t('berthSideLower')}</option><option>${t('berthSideUpper')}</option></select></div>
+        ${needsTrainFields?`<div class="field"><label>${t('govIdLabel')}</label><input type="password" autocomplete="off" value="${m.govId||''}" oninput="session.members[${i}].govId=this.value"><div class="field-hint">${t('govIdHint')}</div></div>`:''}
+        ${needsTrainFields?`<div class="field"><label>${t('berthLabel')}</label><select onchange="session.members[${i}].berth=this.value"><option value="">${t('berthNone')}</option><option>${t('berthLower')}</option><option>${t('berthMiddle')}</option><option>${t('berthUpper')}</option><option>${t('berthSideLower')}</option><option>${t('berthSideUpper')}</option></select></div>`:''}
         <div class="field"><label>${t('medicalLabel')}</label><input value="${m.medical||''}" oninput="session.members[${i}].medical=this.value" placeholder="${t('medicalPlaceholder')}"></div>
       </div>
     </div>
   `).join('');
 }
 
-let collectingReturnDetails = false;
+let familyScreenMode = null; // null | 'companions' | 'returnDetails'
 function applyFamilyScreenText(){
-  document.getElementById('family-title').textContent = collectingReturnDetails ? t('returnDetailsTitle') : t('familyTitle');
-  document.getElementById('family-sub').textContent = collectingReturnDetails ? t('returnDetailsSub') : t('familySub');
+  const titles = { companions: 'companionsTitle', returnDetails: 'returnDetailsTitle' };
+  const subs = { companions: 'companionsSub', returnDetails: 'returnDetailsSub' };
+  document.getElementById('family-title').textContent = t(titles[familyScreenMode] || 'familyTitle');
+  document.getElementById('family-sub').textContent = familyScreenMode==='companions'
+    ? t('companionsSub', {count: session.flightDetails?.count || '—'})
+    : t(subs[familyScreenMode] || 'familySub');
 }
 
 async function submitFamily(){
   const head = session.members[0];
   if(!head || !head.name){ showToast(t('toastAddHeadName')); return; }
-  if(collectingReturnDetails){
-    collectingReturnDetails = false;
+  if(familyScreenMode === 'returnDetails'){
+    familyScreenMode = null;
     await saveRecord();
     playRingTransition(()=>showGuide());
+    return;
+  }
+  if(familyScreenMode === 'companions'){
+    familyScreenMode = null;
+    await saveRecord();
+    updateTravelProgress(3);
+    goTo('screen-return', true);
     return;
   }
   session.travelMode = session.travelMode || 'train';
@@ -1153,7 +1229,7 @@ async function submitFamily(){
 async function handleReturn(choice){
   session.returnTicket = choice;
   if(choice === 'yes' && session.travelMode !== 'train'){
-    collectingReturnDetails = true;
+    familyScreenMode = 'returnDetails';
     applyFamilyScreenText();
     renderFamily();
     goTo('screen-family', true);
@@ -1284,6 +1360,12 @@ function sideStatsPanel(side, records){
   `;
 }
 
+function travellerNames(r){
+  const names = (r.members||[]).map(m=>m.name).filter(Boolean);
+  if(names.length) return names.join(', ') + (names.length < guestCount(r) ? ` (+${guestCount(r)-names.length} unnamed)` : '');
+  return `${guestCount(r)} (no names given)`;
+}
+
 function renderAdminTable(){
   const filtered = adminFilter==='all' ? adminRecords : adminRecords.filter(r=>r.side===adminFilter);
   const tbody = document.querySelector('#admin-table tbody');
@@ -1293,7 +1375,9 @@ function renderAdminTable(){
       <td><span class="side-pill ${r.side||''}">${r.side||'—'}</span></td>
       <td>${r.rsvp?'Yes':'No'}</td>
       <td>${r.travelMode||'—'}</td>
-      <td>${guestCount(r)}</td>
+      <td>${travellerNames(r)}</td>
+      <td>${r.flightDetails?.arrival||'—'}</td>
+      <td>${r.flightDetails?.departure||'—'}</td>
       <td>${r.returnTicket||'—'}</td>
     </tr>
   `).join('');
@@ -1336,7 +1420,7 @@ async function exportCsv(){
 /* ============ CALENDAR ICS ============ */
 function downloadIcs(){
   const events = [
-    {d:'20261125',title:'Kotnam Ritual — Ankita ✦ Vishal',loc:'Hyderabad'},
+    {d:'20261125',title:"Vishal's Groom Ritual — Ankita ✦ Vishal",loc:'Hyderabad'},
     {d:'20261129',title:'Haldi — Ankita ✦ Vishal',loc:'Lucknow'},
     {d:'20261129',title:'Mehendi, Engagement & Sangeet — Ankita ✦ Vishal',loc:'Lucknow'},
     {d:'20261130',title:'The Wedding — Ankita weds Vishal',loc:'Lucknow'},

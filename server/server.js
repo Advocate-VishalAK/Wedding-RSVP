@@ -122,14 +122,17 @@ app.get('/api/all', requireAdmin, async (req, res) => {
 app.get('/api/export.csv', requireAdmin, async (req, res) => {
   const result = await db.execute('SELECT * FROM families ORDER BY timestamp DESC');
   const records = result.rows.map(rowToRecord);
-  const rows = [['Phone', 'Side', 'RSVP', 'Travel Mode', 'Member Name', 'Relation', 'DOB', 'Gender', 'Govt ID', 'Berth', 'Return Ticket']];
+  const rows = [['Phone', 'Side', 'RSVP', 'Travel Mode', 'Arrival', 'Departure', 'Declared Guest Count', 'Member Name', 'Relation', 'DOB', 'Gender', 'Govt ID', 'Berth', 'Return Ticket']];
   records.forEach(r => {
+    const arrival = r.flightDetails ? r.flightDetails.arrival : '';
+    const departure = r.flightDetails ? r.flightDetails.departure : '';
+    const guestCount = r.flightDetails ? r.flightDetails.count : '';
     if (r.members && r.members.length) {
       r.members.forEach(m => {
-        rows.push([r.phone, r.side, r.rsvp, r.travelMode, m.name, m.relation || 'Head', m.dob, m.gender, m.govId, m.berth, r.returnTicket]);
+        rows.push([r.phone, r.side, r.rsvp, r.travelMode, arrival, departure, guestCount, m.name, m.relation || 'Head', m.dob, m.gender, m.govId, m.berth, r.returnTicket]);
       });
     } else {
-      rows.push([r.phone, r.side, r.rsvp, r.travelMode, '', '', '', '', '', '', r.returnTicket]);
+      rows.push([r.phone, r.side, r.rsvp, r.travelMode, arrival, departure, guestCount, '', '', '', '', '', '', r.returnTicket]);
     }
   });
   const csv = rows.map(row => row.map(c => `"${(c ?? '').toString().replace(/"/g, '""')}"`).join(',')).join('\n');
