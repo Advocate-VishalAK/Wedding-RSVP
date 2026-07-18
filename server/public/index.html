@@ -85,22 +85,33 @@
   .btn-row-h{ display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
   .train-btn-route{ display:inline-block; font-size:11.5px; font-weight:600; opacity:0.7; margin-top:3px; letter-spacing:.02em; }
 
-  .cal-legend{ display:flex; align-items:center; justify-content:center; gap:6px; font-size:11.5px; color:var(--silk-dim); margin-bottom:14px; flex-wrap:wrap; }
-  .cal-dot{ width:10px; height:10px; border-radius:50%; display:inline-block; margin-left:10px; }
+  .cal-wrap{ width:100%; border-radius:var(--radius-lg); border:1px solid var(--glass-border-gold); background:var(--glass-bg); padding:20px 16px; margin-bottom:22px; }
+  .cal-wrap-header{ text-align:center; margin-bottom:16px; }
+  .cal-wrap-header .eyebrow{ margin-bottom:4px; }
+  .cal-wrap-header h4{ font-family:'Playfair Display','Noto Sans Devanagari','Noto Sans Telugu',serif; font-weight:600; font-size:16px; margin:0; color:var(--silk); }
+  .cal-legend{ display:flex; align-items:center; justify-content:center; gap:8px; font-size:11.5px; color:var(--silk-dim); margin-bottom:16px; flex-wrap:wrap; }
+  .cal-dot{ width:9px; height:9px; border-radius:50%; display:inline-block; margin-left:10px; flex-shrink:0; }
   .cal-dot:first-child{ margin-left:0; }
   .cal-dot.gold{ background:var(--groom); }
   .cal-dot.rose{ background:var(--bride); }
-  .mini-calendar-row{ display:flex; gap:18px; margin-bottom:20px; flex-wrap:wrap; justify-content:center; width:100%; }
-  .mini-calendar{ flex:1; min-width:150px; max-width:200px; }
-  .cal-month-label{ font-family:'IBM Plex Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:var(--silk-faint); margin-bottom:8px; text-align:center; }
-  .cal-grid{ display:grid; grid-template-columns:repeat(7,1fr); gap:3px; }
-  .cal-grid.cal-weekdays{ margin-bottom:4px; }
-  .cal-grid.cal-weekdays span{ font-size:9px; text-align:center; color:var(--silk-faint); font-family:'IBM Plex Mono',monospace; }
-  .cal-cell{ aspect-ratio:1; display:flex; align-items:center; justify-content:center; font-size:11px; border-radius:6px; color:var(--silk-dim); }
+  .mini-calendar-row{ display:-webkit-box; display:-webkit-flex; display:flex; gap:16px; flex-wrap:wrap; justify-content:center; width:100%; }
+  .mini-calendar{ -webkit-box-flex:1; -webkit-flex:1 1 150px; flex:1 1 150px; min-width:150px; max-width:210px; background:rgba(249,249,251,0.04); border-radius:var(--radius-md); padding:12px 10px; }
+  .cal-month-label{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; font-weight:600; text-transform:uppercase; letter-spacing:.05em; color:var(--groom-soft); margin-bottom:10px; text-align:center; }
+  .cal-grid{ display:-webkit-grid; display:grid; -webkit-grid-template-columns:repeat(7,1fr); grid-template-columns:repeat(7,1fr); gap:2px; }
+  .cal-grid.cal-weekdays{ margin-bottom:5px; }
+  .cal-grid.cal-weekdays span{ display:block; font-size:9px; text-align:center; color:var(--silk-faint); font-family:'IBM Plex Mono',monospace; line-height:16px; }
+  .cal-cell{ height:26px; line-height:26px; text-align:center; font-size:11px; border-radius:6px; color:var(--silk-dim); }
   .cal-cell.empty{ visibility:hidden; }
-  .cal-cell.highlight{ font-weight:700; color:var(--base); }
+  .cal-cell.highlight{ font-weight:700; color:var(--base); box-shadow:0 2px 8px rgba(0,0,0,0.25); }
   .cal-cell.highlight.gold{ background:var(--groom); }
   .cal-cell.highlight.rose{ background:var(--bride); }
+
+  #calendar-modal{ position:fixed; inset:0; z-index:600; display:none; align-items:center; justify-content:center; background:rgba(13,17,39,0.72); backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px); padding:20px; }
+  #calendar-modal.show{ display:flex; }
+  .calendar-modal-box{ position:relative; padding:26px 20px 20px; border-radius:var(--radius-lg); max-width:440px; width:100%; max-height:85vh; overflow-y:auto; -webkit-overflow-scrolling:touch; border:1px solid var(--glass-border-gold); }
+  .calendar-modal-box .modal-close{ position:absolute; top:14px; right:14px; width:32px; height:32px; border-radius:50%; border:none; background:rgba(249,249,251,0.08); color:var(--silk); font-size:15px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+  .calendar-modal-box .modal-close:hover{ background:rgba(245,166,35,0.22); }
+  #cal-toggle svg{ flex-shrink:0; }
 
   .field{ text-align:left; margin-bottom:18px; width:100%; }
   .field label{ display:block; font-size:12px; font-weight:700; color:var(--silk-dim); text-transform:uppercase; letter-spacing:.05em; margin-bottom:7px; }
@@ -321,6 +332,9 @@
   <div class="nav-group">
     <button class="nav-btn" onclick="goBack()" aria-label="Back">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <button id="cal-toggle" class="nav-btn" type="button" onclick="openCalendarModal()" aria-label="Key dates calendar">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4"/><path d="M16 3v4"/></svg>
     </button>
     <button id="lang-toggle" class="nav-btn" type="button" onclick="cycleLang()" aria-label="Change language">EN</button>
   </div>
@@ -601,6 +615,17 @@
 <div class="link-bottom">Ankita ✦ Vishal · <button type="button" onclick="openAdmin()">admin</button></div>
 <div class="toast" id="toast"></div>
 
+<div id="calendar-modal">
+  <div class="calendar-modal-box glass">
+    <button class="modal-close" onclick="closeCalendarModal()" aria-label="Close">✕</button>
+    <div class="cal-wrap-header">
+      <div class="eyebrow" id="cal-modal-eyebrow"></div>
+      <h4 id="cal-modal-title"></h4>
+    </div>
+    <div id="calendar-modal-body"></div>
+  </div>
+</div>
+
 <div id="pin-modal">
   <div class="pin-box glass">
     <h3>Admin access</h3>
@@ -666,6 +691,8 @@ en:{
   companionsTitle:"Who's coming with you?",
   companionsSub:"You told us {count} people in total — add each person's name below so we know exactly who to expect.",
   calLegendHyderabad:"Hyderabad events", calLegendLucknow:"Lucknow events",
+  calWrapEyebrow:"Key Dates", calWrapTitle:"Plan your travel around these dates",
+  calWeekdays:"S,M,T,W,T,F,S", calNovember:"November 2026", calDecember:"December 2026",
   addMemberBtn:"+ Add family member", saveContinueBtn:"Save & continue",
   headOfFamily:"Head of Family", familyMemberN:"Family Member {n}", removeBtn:"Remove",
   fullNameLabel:"Full name", relationshipLabel:"Relationship", dobLabel:"Date of birth", genderLabel:"Gender",
@@ -745,6 +772,8 @@ hi:{
   companionsTitle:"आपके साथ कौन आ रहा है?",
   companionsSub:"आपने कुल {count} लोग बताए थे — कृपया हर व्यक्ति का नाम नीचे जोड़ें ताकि हमें पता हो कि किसकी उम्मीद करनी है।",
   calLegendHyderabad:"हैदराबाद कार्यक्रम", calLegendLucknow:"लखनऊ कार्यक्रम",
+  calWrapEyebrow:"मुख्य तिथियाँ", calWrapTitle:"इन तिथियों के आसपास अपनी यात्रा की योजना बनाएं",
+  calWeekdays:"र,सो,मं,बु,गु,शु,श", calNovember:"नवंबर 2026", calDecember:"दिसंबर 2026",
   addMemberBtn:"+ परिवार सदस्य जोड़ें", saveContinueBtn:"सहेजें और आगे बढ़ें",
   headOfFamily:"परिवार के मुखिया", familyMemberN:"परिवार सदस्य {n}", removeBtn:"हटाएं",
   fullNameLabel:"पूरा नाम", relationshipLabel:"रिश्ता", dobLabel:"जन्म तिथि", genderLabel:"लिंग",
@@ -824,6 +853,8 @@ te:{
   companionsTitle:"మీతో పాటు ఎవరు వస్తున్నారు?",
   companionsSub:"మీరు మొత్తం {count} మంది అని చెప్పారు — ప్రతి వ్యక్తి పేరును దిగువ జోడించండి, తద్వారా మేము ఎవరిని ఆశించాలో తెలుసుకుంటాము.",
   calLegendHyderabad:"హైదరాబాద్ వేడుకలు", calLegendLucknow:"లక్నో వేడుకలు",
+  calWrapEyebrow:"ముఖ్య తేదీలు", calWrapTitle:"ఈ తేదీల చుట్టూ మీ ప్రయాణాన్ని ప్లాన్ చేసుకోండి",
+  calWeekdays:"ఆ,సో,మం,బు,గు,శు,శ", calNovember:"నవంబర్ 2026", calDecember:"డిసెంబర్ 2026",
   addMemberBtn:"+ కుటుంబ సభ్యుడిని జోడించండి", saveContinueBtn:"సేవ్ చేసి కొనసాగించండి",
   headOfFamily:"కుటుంబ పెద్ద", familyMemberN:"కుటుంబ సభ్యుడు {n}", removeBtn:"తొలగించండి",
   fullNameLabel:"పూర్తి పేరు", relationshipLabel:"సంబంధం", dobLabel:"పుట్టిన తేదీ", genderLabel:"లింగం",
@@ -1017,7 +1048,7 @@ function applyFlightIntro(mode){
   renderTravelCalendar();
 }
 
-/* ============ EVENT-DATES CALENDAR (helps flight/car/bus guests pick dates) ============ */
+/* ============ EVENT-DATES CALENDAR (helps guests pick travel dates) ============ */
 function buildMiniCalendar(year, month, monthLabel, highlights){
   const firstDay = new Date(year, month, 1).getDay();
   const daysInMonth = new Date(year, month+1, 0).getDate();
@@ -1027,23 +1058,44 @@ function buildMiniCalendar(year, month, monthLabel, highlights){
     const hl = highlights[d];
     cells += `<div class="cal-cell${hl?' highlight '+hl:''}">${d}</div>`;
   }
+  const weekdayLabels = t('calWeekdays').split(',');
   return `
     <div class="mini-calendar">
       <div class="cal-month-label">${monthLabel}</div>
-      <div class="cal-grid cal-weekdays"><span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span></div>
+      <div class="cal-grid cal-weekdays">${weekdayLabels.map(w=>`<span>${w}</span>`).join('')}</div>
       <div class="cal-grid">${cells}</div>
     </div>
+  `;
+}
+function calendarBodyHTML(){
+  const nov = buildMiniCalendar(2026, 10, t('calNovember'), {25:'gold', 28:'rose', 29:'rose', 30:'rose'});
+  const dec = buildMiniCalendar(2026, 11, t('calDecember'), {4:'gold', 5:'gold'});
+  return `
+    <div class="cal-legend"><span class="cal-dot gold"></span>${t('calLegendHyderabad')}<span class="cal-dot rose"></span>${t('calLegendLucknow')}</div>
+    <div class="mini-calendar-row">${nov}${dec}</div>
   `;
 }
 function renderTravelCalendar(){
   const container = document.getElementById('travel-calendar');
   if(!container) return;
-  const nov = buildMiniCalendar(2026, 10, 'November 2026', {25:'gold', 28:'rose', 29:'rose', 30:'rose'});
-  const dec = buildMiniCalendar(2026, 11, 'December 2026', {4:'gold', 5:'gold'});
   container.innerHTML = `
-    <div class="cal-legend"><span class="cal-dot gold"></span>${t('calLegendHyderabad')}<span class="cal-dot rose"></span>${t('calLegendLucknow')}</div>
-    <div class="mini-calendar-row">${nov}${dec}</div>
+    <div class="cal-wrap">
+      <div class="cal-wrap-header">
+        <div class="eyebrow">${t('calWrapEyebrow')}</div>
+        <h4>${t('calWrapTitle')}</h4>
+      </div>
+      ${calendarBodyHTML()}
+    </div>
   `;
+}
+function openCalendarModal(){
+  document.getElementById('cal-modal-eyebrow').textContent = t('calWrapEyebrow');
+  document.getElementById('cal-modal-title').textContent = t('calWrapTitle');
+  document.getElementById('calendar-modal-body').innerHTML = calendarBodyHTML();
+  document.getElementById('calendar-modal').classList.add('show');
+}
+function closeCalendarModal(){
+  document.getElementById('calendar-modal').classList.remove('show');
 }
 
 function chooseTravel(mode){
